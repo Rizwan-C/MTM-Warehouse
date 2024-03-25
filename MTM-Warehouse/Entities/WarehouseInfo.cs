@@ -7,7 +7,7 @@ namespace MTM_Warehouse.Entities
     {
 
         [Key]
-        public int W_Id { get; set; }
+        public int WarehouseInfoId { get; set; }
 
         [Required(ErrorMessage = "")]
         public string? W_Name { get; set; }
@@ -26,7 +26,6 @@ namespace MTM_Warehouse.Entities
 
         [Required(ErrorMessage = "")]
         public double? W_PercentFull { get; set; }
-
 
 
     }
