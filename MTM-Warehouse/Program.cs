@@ -1,7 +1,14 @@
+using Microsoft.EntityFrameworkCore;
+using MTM_Warehouse.Entities;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+// Add DB context service:
+string connStr = builder.Configuration.GetConnectionString("DbConnString");
+builder.Services.AddDbContext<AllDbContext>(options => options.UseSqlServer(connStr));
 
 var app = builder.Build();
 
@@ -18,6 +25,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Login}/{action=LoginPage}/{id?}");
 
 app.Run();

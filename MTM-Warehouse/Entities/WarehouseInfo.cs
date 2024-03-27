@@ -1,4 +1,4 @@
-﻿using Mono.TextTemplating;
+﻿
 using System.ComponentModel.DataAnnotations;
 
 namespace MTM_Warehouse.Entities
@@ -27,6 +27,11 @@ namespace MTM_Warehouse.Entities
         [Required(ErrorMessage = "")]
         public double? W_PercentFull { get; set; }
 
+
+        //public int EmpDataId { get; set; }
+        public ICollection<WarehouseItems>? WarehouseItems { get; set; }
+
+        public ICollection<EmpData>? EmpDatas { get; set; }
 
     }
 }

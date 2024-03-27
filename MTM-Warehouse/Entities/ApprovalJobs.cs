@@ -23,9 +23,11 @@ namespace MTM_Warehouse.Entities
 
         
 
-        public string? ApprovalsId { get; set; }
+        public int? JobProgressId { get; set; }
 
-        public Approvals Approvals { get; set; }
+        public JobProgress? JobProgress { get; set; }
+
+        public Approvals? Approvals { get; set; }
 
     }
 }

@@ -27,5 +27,11 @@ namespace MTM_Warehouse.Entities
 
         public LoginEmp LoginEmp { get; set; }
 
+
+        public int ApprovalJobsId { get; set; }
+
+        public ApprovalJobs ApprovalJobs { get; set; }
+
+
     }
 }

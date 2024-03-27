@@ -1,4 +1,4 @@
-﻿using Mono.TextTemplating;
+﻿
 using System.ComponentModel.DataAnnotations;
 
 namespace MTM_Warehouse.Entities
@@ -7,16 +7,16 @@ namespace MTM_Warehouse.Entities
     {
 
         [Key]
-        public int JobProgressid { get; set; }
+        public int JobProgressId { get; set; }
 
 
         [Required(ErrorMessage = "")]
         public string? State { get; set; }
 
 
-        public int ApprovalJobsId { get; set; }
-        
-        public ApprovalJobs ApprovalJobs { get; set; }
+
+
+        public ICollection<ApprovalJobs>? ApprovalJobs { get; set; }
 
     }
 }

@@ -23,5 +23,7 @@ namespace MTM_Warehouse.Entities
         [Required(ErrorMessage = "")]
         public string? AccessRights { get; set; }
 
+
+        public ICollection<Approvals>? Approvals { get; set; }
     }
 }

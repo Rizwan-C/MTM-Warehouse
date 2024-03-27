@@ -29,8 +29,9 @@ namespace MTM_Warehouse.Entities
         [Required(ErrorMessage = "")]
         public double? LastDay { get; set; }
 
-        [Required(ErrorMessage = "")]
-        public double? W_Id { get; set; }
+        
+        public int? WarehouseInfoId { get; set; }
+        public WarehouseInfo? WarehouseInfo { get; set; }
 
     }
 }
