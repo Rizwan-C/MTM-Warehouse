@@ -8,19 +8,19 @@ namespace MTM_Warehouse.Entities
         [Key]
         public int LoginEmpId { get; set; }
 
-        [Required(ErrorMessage ="")]
+        
         public string? Name { get; set; }
 
-        [Required(ErrorMessage = "")]
+        
         public string? Email { get; set; }
 
-        [Required(ErrorMessage = "")]
+        [Required(ErrorMessage = "Needs Username")]
         public string? Username { get; set; }
 
-        [Required(ErrorMessage = "")]
+        [Required(ErrorMessage = "Needs Password")]
         public string? Password { get; set; }
 
-        [Required(ErrorMessage = "")]
+        
         public string? AccessRights { get; set; }
 
 

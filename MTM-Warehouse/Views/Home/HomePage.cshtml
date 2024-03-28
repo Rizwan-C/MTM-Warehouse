@@ -1,0 +1,62 @@
+﻿
+
+
+<nav class="navbar navbar-expand-lg bg-dark navbar-dark py-3">
+    <div class="container">
+        <img class="navbar-img mx-3" src="~/images/logo.jpg" alt="no_logo">
+        <div class="navbar-brand">MTM Warehouse</div>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navmenu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="justify-content-center px-5"><spap class="mx-3 text-primary ">Hello! @ViewBag.Name</spap></div>
+        
+        <div class="collapse navbar-collapse" id="navmenu">
+            <ul class="navbar-nav ms-auto ">
+                <li class="nav-item">
+                    <a asp-controller="Home" asp-action="HomePage" class="nav-link mx-4"><strong>Home</strong></a>
+                </li>
+                <li class="nav-item">
+                    <a asp-controller="Action" asp-action="ListActions" class="nav-link mx-4"><strong>Actions</strong></a>
+                </li>
+                <li class="nav-item">
+                    <a asp-controller="Action" asp-action="ReportPage" class="nav-link mx-4"><strong>Reports</strong></a>
+                </li>
+                <li class="nav-item">
+                    <a asp-controller="Home" asp-action="Logout" class="btn btn-outline-danger btn-sm btn-floating mx-4 p-2">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+@* <div class="navbar">
+        <img class="navbar-img" src="~/images/logo.jpg" alt="no_logo">
+        <div class="navbar-brand">MTM Warehouse</div>
+        <div class="nav">
+            <a asp-controller="Home" asp-action="HomePage" class="nav-link">Home</a>
+            <a asp-controller="Action" asp-action="ListActions" class="nav-link">Actions</a>
+            <a class="nav-link" href="#">Reports</a>
+        </div>
+        <div class="navbar-search-bar">
+            <label for="searchInput" class="form-label">Search Warehouse</label>
+            <input type="text" id="searchInput" class="form-control" placeholder="Search Warehouse">
+            <button class="btn btn-primary" type="button">Search</button>
+        </div>
+    </div> *@
+
+@if (TempData.ContainsKey("LastActionMessage"))
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["LastActionMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<div class="container my-5">
+    <div class="no-item-message text-center ">
+        <p>You don't have anything to view.</p>
+        <p>Start by adding warehouse.</p>
+        <p>Go to <strong>Actions</strong> page</p>
+    </div>
+</div>

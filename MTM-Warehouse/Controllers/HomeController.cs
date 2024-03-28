@@ -13,9 +13,15 @@ namespace MTM_Warehouse.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public IActionResult HomePage()
         {
             return View();
+        }
+
+
+        public IActionResult Logout()
+        {
+            return RedirectToAction("LoginPage", "Login");
         }
 
         public IActionResult Privacy()

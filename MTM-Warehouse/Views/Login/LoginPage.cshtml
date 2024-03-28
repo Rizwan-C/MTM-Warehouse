@@ -1,4 +1,4 @@
-﻿
+﻿@model LoginEmp
 
 
 <div class="container">
@@ -7,15 +7,15 @@
         <h1>MTM Warehouse</h1>
         <div class="login-container">
             <div class="logo">
-                <img src="images/logo.jpg" alt="MTM Warehouse" />
+                <img src="~/images/logo.jpg" alt="MTM Warehouse" />
             </div>
             <div class="form-group">
                 <form asp-controller="Login" asp-action="FetchLoginDetails" enctype="application/x-www-form-urlencoded">
                     <h2>Login</h2>
-                    <input type="text" class="form-control form-control-sm" placeholder="Username" required/>
-                    <input type="password" class="form-control form-control-sm" placeholder="Password" required />
-                    <button type="submit" class="btn btn-block login-btn">Login</button>  
-                    <div asp-validation-summary="All"></div>
+                    <input type="text" class="form-control form-control-sm" placeholder="Username" asp-for="Username" required />
+                    <input type="password" class="form-control form-control-sm" placeholder="Password" asp-for="Password" required />
+                    <button type="submit" class="btn btn-block login-btn">Login</button>
+                    <div asp-validation-summary="All" class="text-danger text-sm-start text-decoration-none fs-6"></div>
                 </form>
                 <a href="#" class="enroll-link">Click here to get enrolled by organization</a>
             </div>
@@ -23,3 +23,13 @@
     </div>
     <!-- </div> -->
 </div>
+
+
+
+@if (TempData.ContainsKey("LastActionMessage"))
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["LastActionMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}eBkP!FTVJ45715k

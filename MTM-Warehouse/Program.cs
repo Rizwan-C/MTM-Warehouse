@@ -3,6 +3,16 @@ using MTM_Warehouse.Entities;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
+builder.Services.AddDistributedMemoryCache(); // Needed to store session in memory
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(720); // 12 hours timeout
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
+
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
