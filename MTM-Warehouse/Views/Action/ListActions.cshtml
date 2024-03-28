@@ -24,9 +24,9 @@
 </nav>
 
 
-<div class="container m-5">
+@*<div class="container m-5">
 
-    <div class="container">
+     <div class="container">
         <div class="row justify-content-evenly">
             <div class="col-2">
                 <div class="d-grid gap-2">
@@ -51,5 +51,60 @@
             </div>
         </div>
     </div>
+    </div> *@
 
-</div>
+    <div class="container my-1">
+        <div class="row g-auto mx-auto my-5 justify-content-evenly">
+
+            <div class="col-2">
+                <div class="card" style="width: 14rem;">
+                    <img src="~/images/W-micro.png" class="card-img-top" alt="...">
+                    <div class="card-body">
+                    <h5 class="card-title text-center text-info"><strong>Warehouse</strong></h5>
+                        <p class="card-text text-center">Number of warehouse</p>
+                        <p class="card-text text-center fs-1"><strong>- 0 -</strong></p>
+                        <div class="col-12">
+                            <div class="d-grid gap-2">
+                                <a asp-controller="Action" asp-action="AddWarehousePage" class="btn btn-outline-dark btn-sm btn-floating" type="button" role="button"><strong class="fs-3">+</strong></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-2">
+                <div class="card" style="width: 14rem;">
+                    <img src="~/images/manager-micro.png" class="card-img-top" alt="...">
+                    <div class="card-body">
+                    <h5 class="card-title text-center text-info"><strong>Roles</strong></h5>
+                        <p class="card-text text-center">Number of Roles assigned</p>
+                        <p class="card-text text-center fs-1"><strong>- 0 -</strong></p>
+                        <div class="col-12">
+                            <div class="d-grid gap-2">
+                                <a asp-controller="Action" asp-action="AddManagingRoles" class="btn btn-outline-dark btn-sm btn-floating" type="button" role="button"><strong class="fs-3">+</strong></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-2">
+                <div class="card" style="width: 14rem;">
+                    <img src="~/images/Employees.png" class="card-img-top" alt="...">
+                    <div class="card-body">
+                    <h5 class="card-title text-center text-info"><strong>Employees</strong></h5>
+                        <p class="card-text text-center">Number of Employees</p>
+                        <p class="card-text text-center fs-1"><strong>- 0 -</strong></p>
+                        <div class="col-12">
+                            <div class="d-grid gap-2">
+                                <a asp-controller="Action" asp-action="AddEmployeeData" class="btn btn-outline-dark btn-sm btn-floating" type="button" role="button"><strong class="fs-3">+</strong></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+

@@ -11,13 +11,13 @@
             </div>
             <div class="form-group">
                 <form asp-controller="Login" asp-action="FetchLoginDetails" enctype="application/x-www-form-urlencoded">
-                    <h2>Login</h2>
+                    <h2 class="text-center">Get In !</h2>
                     <input type="text" class="form-control form-control-sm" placeholder="Username" asp-for="Username" required />
                     <input type="password" class="form-control form-control-sm" placeholder="Password" asp-for="Password" required />
                     <button type="submit" class="btn btn-block login-btn">Login</button>
                     <div asp-validation-summary="All" class="text-danger text-sm-start text-decoration-none fs-6"></div>
                 </form>
-                <a href="#" class="enroll-link">Click here to get enrolled by organization</a>
+                <a href="#" class="enroll-link text-info">Click here to get enrolled</a>
             </div>
         </div>
     </div>
@@ -32,4 +32,4 @@
         @TempData["LastActionMessage"]
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
-}eBkP!FTVJ45715k
+}
