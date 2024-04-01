@@ -1,0 +1,143 @@
+﻿@model ManagerWarehouseModel
+
+
+<header>
+    <nav class="navbar navbar-expand-lg bg-dark navbar-dark py-3">
+        <div class="container">
+            <img class="navbar-img mx-3" src="~/images/logo.jpg" alt="no_logo">
+            <div class="navbar-brand">MTM Warehouse</div>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navmenu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navmenu">
+                <ul class="navbar-nav ms-auto ">
+                    <li class="nav-item">
+                        <a asp-controller="Home" asp-action="HomePage" class="nav-link mx-4"><strong>Home</strong></a>
+                    </li>
+                    <li class="nav-item">
+                        <a asp-controller="Action" asp-action="ListActions" class="nav-link mx-4"><strong>Actions</strong></a>
+                    </li>
+                    <li class="nav-item">
+                        <a asp-controller="Action" asp-action="ReportPage" class="nav-link mx-4"><strong>Reports</strong></a>
+                    </li>
+                    <li class="nav-item">
+                        <a asp-controller="Home" asp-action="Logout" class="btn btn-outline-danger btn-sm btn-floating mx-4 p-2">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
+
+<section class="bg-dark text-light p-2 text-sm-start">
+    <div class="container">
+        <div class="d-sm-flex align-items-center justify-content-between">
+
+            <div class="container col-4 mx-2">
+                <h1 class="text-start" style="color: yellowgreen">Manager Details</h1>
+                <p class="my-4 text-start">
+                    Please put all the information that has been asked realted to the manger.
+                </p>
+            </div>
+
+            <div class="col-3 p-3">
+                <img class="img-fluid rounded img-thumbnail" style="height: 200px; width:200px" src="~/images/manager-micro.png">
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+
+<div class="container mt-4">
+    <h4 class="text-center mb-4" style="font-weight: bold; font-size:30px  ; color: #005f9b;">Manager Information</h4>
+</div>
+
+<div class="container-md">
+
+    <form asp-controller="Warehouse" asp-action="AddManager" method="post" enctype="application/x-www-form-urlencoded">
+
+        <div class="row">
+            <div class="container col-6 my-4">
+
+                <div class="row">
+                    <div class="col-4">
+                        <label for="W_Name">Name</label>
+                    </div>
+                    <div class="col-8">
+                        <input type="text" class="form-control " asp-for="@Model.LoginEmp.Name">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-4">
+                        <label for="W_Location">Email</label>
+                    </div>
+                    <div class="col-8">
+                        <input type="text" class="form-control " asp-for="@Model.LoginEmp.Email">
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-4">
+                        <label for="W_PinCode">Username</label>
+                    </div>
+                    <div class="col-8">
+                        <input type="text" class="form-control " asp-for="@Model.LoginEmp.Username">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-4">
+                        <label for="W_TotalCapacity">Password</label>
+                    </div>
+                    <div class="col-8">
+                        <input type="password" step="0.01" class="form-control " asp-for="@Model.LoginEmp.Password">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-4">
+                        <label for="W_PinCode">Access rights level</label>
+                    </div>
+                    <div class="col-8">
+                        <select asp-for="@Model.LoginEmp.AccessRights" class="form-select form-control" required>
+                            <option selected>Select ...</option>
+                            @* <option value="">Select ...</option> *@
+                            <option value="alpha">Alpha</option>
+                            <option value="beta">Beta</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        <label for="W_PinCode">Warehouse assigned</label>
+                    </div>
+                    <div class="col-8">
+                        <input type="text" class="form-control " asp-for="@Model.WarehouseInfo.W_Name" disabled>
+                    </div>
+                </div>
+
+                <input type="hidden" asp-for="WarehouseInfo.WarehouseInfoId">
+                @* <input type="hidden" asp-for="@Model.WarehouseInfo"> *@
+                
+
+            </div>
+
+            <div class="col-5 pt-3 row justify-content-center">
+                <div class="col-12">
+                    <button type="submit" class="btn btn-outline-primary ">Submit</button>
+                    <a asp-controller="Action" asp-action="ListActions" class=" btn btn-outline-danger"><strong>Cancel</strong></a>
+                </div>
+
+                <div class="col-12 align-items-start">
+                    <div asp-validation-summary="All" class="text-danger" style="list-style:none"></div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+</div>

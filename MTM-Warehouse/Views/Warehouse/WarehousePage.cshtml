@@ -67,6 +67,22 @@
     </div>
 </section>
 
+<div class="container mb-0">
+    <div class="d-sm-flex align-items-center justify-content-end p-3 mb-0">
+        <a asp-controller="Home" asp-action="HomePage" class="btn btn-outline-secondary btn-sm btn-floating col-2"><strong>Back</strong></a>
+    </div>
+</div>
+
+
+@if (TempData.ContainsKey("LastActionMessage"))
+{
+    <div class="container px-5">
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["LastActionMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    </div>    
+}
 
 <div class="container">
 
@@ -85,14 +101,14 @@
 
                         <div class="col-4 p-0">
                             <div class="card-body p-1">
-                                <p class="card-text text-center m-0 p-0 fs-6"><strong ">Total managers assigned to this warehouse</strong></p>
+                                <p class="card-text text-center m-0 p-0 fs-6"><strong>Total managers assigned to this warehouse</strong></p>
                                 <p class="card-text text-center m-0 p-0 fs-6"><strong class="px-5" > <u>@Model.loginEmpModelObj.Count</u> </strong></p>
                             </div>
                         </div>
 
                         <div class="col-4 p-0">
                             <div class="card-body p-1 d-flex justify-content-center align-items-center" style="height: 100%;">
-                                <a asp-controller="Action" asp-action="AddManager" class="btn btn-outline-dark btn-sm btn-floating" role="button"><strong class="fs-6">Add manager</strong></a>
+                                <a asp-controller="Warehouse" asp-action="AddManagerPage" asp-route-id="@Model.warehouseInfoModelObj.WarehouseInfoId" class="btn btn-outline-dark btn-sm btn-floating" role="button"><strong class="fs-6">Add manager</strong></a>
                             </div>
                         </div>
 
@@ -162,19 +178,3 @@
 
 
 
-@* <div class="container">
-    <div class="d-sm-flex align-items-center justify-content-between">
-
-        <div class="container col-4 mx-2">
-            <h1 class="text-start" style="color: yellowgreen">@ViewData["Title"]</h1>
-            <p class="my-4 text-start">
-                Please put all the information that has been asked realted to the warehouse.
-            </p>
-        </div>
-
-        <div class="col-3 p-3">
-            <img class="img-fluid rounded img-thumbnail" style="height: 200px; width:200px" src="~/images/W-graphic.jpg">
-        </div>
-
-    </div>
-</div> *@
