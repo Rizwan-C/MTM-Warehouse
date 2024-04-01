@@ -19,13 +19,21 @@ namespace MTM_Warehouse.Controllers
 
         [HttpGet("/view/warehouse")] 
         public IActionResult OpenWarehouse(int id)
-        {
-            WarehouseModel warehouseModel = new WarehouseModel();
-            
+        {            
             WarehouseInfo? warehouseInfo = _context.WarehouseInfo_DbData.Find(id);
-            //LoginEmp loginEmp = _context.loginEmps_DbData.Where()
+            List<LoginEmp> loginEmp = _context.loginEmps_DbData.Where(emp => emp.WarehouseInfoId == id).ToList();
+            List<EmpData> empData = _context.EmpData_DbData.Where(emp => emp.WarehouseInfoId == id).ToList();
+            List<WarehouseItems> allItems = _context.WarehouseItems_DbData.Where(items => items.WarehouseInfoId == id).ToList() ;
 
-            return View("WarehousePage");
+            WarehouseModel warehouseModel = new WarehouseModel()
+            {
+                warehouseInfoModelObj = warehouseInfo,
+                loginEmpModelObj = loginEmp,
+                empDataModelObj = empData, 
+                allItemsModelObj = allItems
+            };
+
+            return View("WarehousePage", warehouseModel);
         }
 
 

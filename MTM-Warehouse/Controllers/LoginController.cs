@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Identity.Client;
 using MTM_Warehouse.Entities;
 
 namespace MTM_Warehouse.Controllers
@@ -11,10 +12,17 @@ namespace MTM_Warehouse.Controllers
             _context = allDbContext;
         }
 
+        // [HttpGet("/login")]
+        //public IActionResult LoginPage(LoginEmp loginEmp)
+        //{
+        //    loginEmp =  new LoginEmp();
+        //    return View(loginEmp);
+        //}
+
         [HttpGet("/login")]
-        public IActionResult LoginPage(LoginEmp loginEmp)
-        {
-            return View(loginEmp);
+        public IActionResult LoginPage()
+        {            
+            return View();
         }
 
         public IActionResult Logout()
@@ -57,6 +65,8 @@ namespace MTM_Warehouse.Controllers
                 return View("LoginPage", loginEmp);
             }
 
+
+            
         }
     }
 }

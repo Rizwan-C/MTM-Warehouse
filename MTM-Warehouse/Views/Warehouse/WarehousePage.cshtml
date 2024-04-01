@@ -1,0 +1,179 @@
+﻿@model WarehouseModel
+
+@{
+    ViewData["Title"] = Model.warehouseInfoModelObj.W_Name;
+}
+
+
+
+<header>
+    <nav class="navbar navbar-expand-lg bg-dark navbar-dark py-3">
+        <div class="container">
+            <img class="navbar-img mx-3" src="~/images/logo.jpg" alt="no_logo">
+            <div class="navbar-brand">MTM Warehouse</div>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navmenu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navmenu">
+                <ul class="navbar-nav ms-auto ">
+                    <li class="nav-item">
+                        <a asp-controller="Home" asp-action="HomePage" class="nav-link mx-4"><strong>Home</strong></a>
+                    </li>
+                    <li class="nav-item">
+                        <a asp-controller="Action" asp-action="ListActions" class="nav-link mx-4"><strong>Actions</strong></a>
+                    </li>
+                    <li class="nav-item">
+                        <a asp-controller="Action" asp-action="ReportPage" class="nav-link mx-4"><strong>Reports</strong></a>
+                    </li>
+                    <li class="nav-item">
+                        <a asp-controller="Home" asp-action="Logout" class="btn btn-outline-danger btn-sm btn-floating mx-4 p-2">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
+
+
+<section class="bg-dark text-light p-2 text-sm-start">
+    <div class="card mb-3">
+        <div class="row g-0 align-items-center">
+
+            <div class="col-4 p-0">
+                <div class="card-body p-0">
+                    <h5 class="card-title fs-3">@ViewData["Title"]</h5>
+                    <p class="card-text">
+                        <i class="fas fa-map-marker-alt"></i> @Model.warehouseInfoModelObj.W_Location
+                    </p>
+
+                </div>
+            </div>
+
+            <div class="col-4 p-0">
+                <div class="card-body" style="padding: 2px;">
+                    <p class="card-text">Total Capacity : @Model.warehouseInfoModelObj.W_TotalCapacity Sq.Ft</p>
+                    <p class="card-text">Avalilable : @Model.warehouseInfoModelObj.W_SpaceAvailable Sq.Ft</p>
+                    <p class="card-text">Percent Occupied : @Model.warehouseInfoModelObj.W_PercentFull &permil;</p>
+                </div>
+            </div>
+
+            <div class="col-4 align-items-start p-0">
+                <img src="~/images/W-graphic.jpg" class="img-fluid rounded-start" style="width: 150px; height: 150px; padding: 0;">
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+<div class="container">
+
+    <div class="container my-1">
+        <div class="row g-auto mx-auto my-5 justify-content-center">
+
+            <!-- Card 1: Total Managers -->
+            <div class="col-12 mb-3">
+                <div class="card ">
+                    <div class="row g-0">
+                        <div class="col-md-4 p-0">
+                            <div class="card-body p-1">
+                                <h5 class="card-title text-center text-info text-white bg-dark p-3 m-0"><strong>Managers</strong></h5>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 p-0 ">
+                            <div class="card-body p-1">
+                                <p class="card-text text-center fs-1 m-0 p-0"><strong>Total managers assigned to this warehouse</strong></p>
+                                <p class="card-text text-center fs-1 m-0 p-0"><strong class="px-5"> <u>@Model.loginEmpModelObj.Count</u> </strong></p>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 p-0">
+                            <div class="card-body p-1 d-flex justify-content-center align-items-center" style="height: 100%;">
+                                <a asp-controller="Action" asp-action="AddManager" class="btn btn-outline-dark btn-sm btn-floating" role="button"><strong class="fs-3">Add manager</strong></a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 2: Total Employees -->
+            <div class="col-12 mb-3">
+                <div class="card ">
+                    <div class="row g-0">
+                        <div class="col-md-4 p-0">
+                            <div class="card-body p-1">
+                                <h5 class="card-title text-center text-info text-white bg-dark p-3 m-0"><strong>Employee</strong></h5>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 p-0 ">
+                            <div class="card-body p-1">
+                                <p class="card-text text-center fs-1 m-0 p-0"><strong>Total employees working at this warehouse</strong></p>
+                                <p class="card-text text-center fs-1 m-0 p-0"><strong class="px-5"> <u>@Model.empDataModelObj.Count</u> </strong></p>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 p-0">
+                            <div class="card-body p-1 d-flex justify-content-center align-items-center" style="height: 100%;">
+                                <a asp-controller="Action" asp-action="AddEmployee" class="btn btn-outline-dark btn-sm btn-floating" role="button"><strong class="fs-3">Add Employees</strong></a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 3: Items -->
+            <div class="col-12 mb-3">
+                <div class="card ">
+                    <div class="row g-0">
+                        <div class="col-md-4 p-0">
+                            <div class="card-body p-1">
+                                <h5 class="card-title text-center text-info text-white bg-dark p-3 m-0"><strong>Itmes</strong></h5>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 p-0 ">
+                            <div class="card-body p-1">
+                                <p class="card-text text-center fs-1 m-0 p-0"><strong>Total items present in this warehouse</strong></p>
+                                <p class="card-text text-center fs-1 m-0 p-0"><strong class="px-5"> <u>@Model.allItemsModelObj.Count</u> </strong></p>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 p-0">
+                            <div class="card-body p-1 d-flex justify-content-center align-items-center" style="height: 100%;">
+                                <a asp-controller="Action" asp-action="AddItems" class="btn btn-outline-dark btn-sm btn-floating" role="button"><strong class="fs-3">Add items</strong></a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+
+
+
+@* <div class="container">
+    <div class="d-sm-flex align-items-center justify-content-between">
+
+        <div class="container col-4 mx-2">
+            <h1 class="text-start" style="color: yellowgreen">@ViewData["Title"]</h1>
+            <p class="my-4 text-start">
+                Please put all the information that has been asked realted to the warehouse.
+            </p>
+        </div>
+
+        <div class="col-3 p-3">
+            <img class="img-fluid rounded img-thumbnail" style="height: 200px; width:200px" src="~/images/W-graphic.jpg">
+        </div>
+
+    </div>
+</div> *@
