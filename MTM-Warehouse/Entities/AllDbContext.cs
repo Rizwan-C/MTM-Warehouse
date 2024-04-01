@@ -34,7 +34,7 @@ namespace MTM_Warehouse.Entities
             modelBuilder.Entity<LoginEmp>()
                 .HasMany(le => le.Approvals)
                 .WithOne(a => a.LoginEmp)
-                .HasForeignKey(a => a.LoginEmpId);
+                .HasForeignKey(a => a.LoginEmpId);            
 
             // One-to-Many relationship between JobProgress and ApprovalJobs
             modelBuilder.Entity<JobProgress>()
@@ -48,6 +48,12 @@ namespace MTM_Warehouse.Entities
                 .WithOne(wi => wi.WarehouseInfo)
                 .HasForeignKey(wi => wi.WarehouseInfoId);
 
+            // One-to-Many relationship between WarehouseInfo and LoginEmp
+            modelBuilder.Entity<WarehouseInfo>()
+                .HasMany(man => man.loginEmps)
+                .WithOne(man => man.WarehouseInfo)
+                .HasForeignKey(fk => fk.WarehouseInfoId);
+            
             // One-to-One relationship between ApprovalJobs and Approvals            
             modelBuilder.Entity<ApprovalJobs>()
                 .HasOne<Approvals>(aj => aj.Approvals)

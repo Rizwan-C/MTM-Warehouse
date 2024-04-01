@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MTM_Warehouse.Entities;
 using MTM_Warehouse.Models;
+using MTM_Warehouse.Services;
 using System.Diagnostics;
 
 namespace MTM_Warehouse.Controllers
@@ -8,14 +10,27 @@ namespace MTM_Warehouse.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        private AllDbContext _context;
+        private IWarehouseInfoService _warehouseInfoService;
+        public HomeController(AllDbContext allDbContext, IWarehouseInfoService warehouseInfoService, ILogger<HomeController> logger)
         {
-            _logger = logger;
+            _context = allDbContext;
+            _warehouseInfoService = warehouseInfoService;
+            _logger = logger;   
         }
+
 
         public IActionResult HomePage()
         {
-            return View();
+            List<WarehouseInfo> warehouseInfos = _context.WarehouseInfo_DbData.ToList();
+            if(warehouseInfos.Count == 0)
+            {
+                warehouseInfos.Add(new WarehouseInfo() 
+                {
+                    WarehouseInfoId = -1,
+                });
+            }    
+            return View(warehouseInfos);
         }
 
 

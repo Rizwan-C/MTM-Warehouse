@@ -173,15 +173,12 @@ namespace MTM_Warehouse.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("LoginEmpId"));
 
                     b.Property<string>("AccessRights")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Password")
@@ -192,7 +189,12 @@ namespace MTM_Warehouse.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("WarehouseInfoId")
+                        .HasColumnType("int");
+
                     b.HasKey("LoginEmpId");
+
+                    b.HasIndex("WarehouseInfoId");
 
                     b.ToTable("loginEmps_DbData");
                 });
@@ -214,7 +216,6 @@ namespace MTM_Warehouse.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<double?>("W_PercentFull")
-                        .IsRequired()
                         .HasColumnType("float");
 
                     b.Property<string>("W_PinCode")
@@ -222,7 +223,6 @@ namespace MTM_Warehouse.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<double?>("W_SpaceAvailable")
-                        .IsRequired()
                         .HasColumnType("float");
 
                     b.Property<double?>("W_TotalCapacity")
@@ -304,6 +304,15 @@ namespace MTM_Warehouse.Migrations
                     b.Navigation("WarehouseInfo");
                 });
 
+            modelBuilder.Entity("MTM_Warehouse.Entities.LoginEmp", b =>
+                {
+                    b.HasOne("MTM_Warehouse.Entities.WarehouseInfo", "WarehouseInfo")
+                        .WithMany("loginEmps")
+                        .HasForeignKey("WarehouseInfoId");
+
+                    b.Navigation("WarehouseInfo");
+                });
+
             modelBuilder.Entity("MTM_Warehouse.Entities.WarehouseItems", b =>
                 {
                     b.HasOne("MTM_Warehouse.Entities.WarehouseInfo", "WarehouseInfo")
@@ -333,6 +342,8 @@ namespace MTM_Warehouse.Migrations
                     b.Navigation("EmpDatas");
 
                     b.Navigation("WarehouseItems");
+
+                    b.Navigation("loginEmps");
                 });
 #pragma warning restore 612, 618
         }

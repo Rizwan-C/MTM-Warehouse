@@ -11,9 +11,10 @@ namespace MTM_Warehouse.Controllers
             _context = allDbContext;
         }
 
-        public IActionResult LoginPage()
+        [HttpGet("/login")]
+        public IActionResult LoginPage(LoginEmp loginEmp)
         {
-            return View();
+            return View(loginEmp);
         }
 
         public IActionResult Logout()
@@ -22,8 +23,10 @@ namespace MTM_Warehouse.Controllers
             return View("LoginPage");
         }
 
+        [HttpPost("/login")]
         public IActionResult FetchLoginDetails( LoginEmp loginEmp)
         {
+            Console.WriteLine("LoginController :: FetchLoginDetails()");
             LoginEmp loggedEmp = _context.loginEmps_DbData.Where(s => s.Username == loginEmp.Username).FirstOrDefault();
 
             if (ModelState.IsValid)
@@ -38,11 +41,13 @@ namespace MTM_Warehouse.Controllers
                     ViewBag.UserName = HttpContext.Session.GetString("UserName") ?? "None";
                     ViewBag.AccessRight = HttpContext.Session.GetString("AccessRight") ?? "None";
 
+                    Console.WriteLine("Sucessfull Login : User - ", loggedEmp.Name);
 
                     return RedirectToAction("HomePage","Home");
                 }
                 else
                 {
+                    Console.WriteLine("Login failed");
                     ModelState.AddModelError(string.Empty, "The username or password is incorrect.");
                     return View("LoginPage", loginEmp); 
                 }

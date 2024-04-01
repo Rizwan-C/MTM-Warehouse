@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MTM_Warehouse.Migrations
 {
     [DbContext(typeof(AllDbContext))]
-    [Migration("20240327051802_mig-01")]
-    partial class mig01
+    [Migration("20240401121951_Initialize_DB")]
+    partial class Initialize_DB
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -49,8 +49,7 @@ namespace MTM_Warehouse.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("JobProgressid")
-                        .IsRequired()
+                    b.Property<int?>("JobProgressId")
                         .HasColumnType("int");
 
                     b.Property<string>("To_Warehouse")
@@ -63,7 +62,7 @@ namespace MTM_Warehouse.Migrations
 
                     b.HasKey("ApprovalJobsId");
 
-                    b.HasIndex("JobProgressid");
+                    b.HasIndex("JobProgressId");
 
                     b.ToTable("ApprovalJobs_DbData");
                 });
@@ -153,17 +152,17 @@ namespace MTM_Warehouse.Migrations
 
             modelBuilder.Entity("MTM_Warehouse.Entities.JobProgress", b =>
                 {
-                    b.Property<int>("JobProgressid")
+                    b.Property<int>("JobProgressId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("JobProgressid"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("JobProgressId"));
 
                     b.Property<string>("State")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("JobProgressid");
+                    b.HasKey("JobProgressId");
 
                     b.ToTable("JobProgress_DbData");
                 });
@@ -177,15 +176,12 @@ namespace MTM_Warehouse.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("LoginEmpId"));
 
                     b.Property<string>("AccessRights")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Password")
@@ -196,7 +192,12 @@ namespace MTM_Warehouse.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("WarehouseInfoId")
+                        .HasColumnType("int");
+
                     b.HasKey("LoginEmpId");
+
+                    b.HasIndex("WarehouseInfoId");
 
                     b.ToTable("loginEmps_DbData");
                 });
@@ -218,7 +219,6 @@ namespace MTM_Warehouse.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<double?>("W_PercentFull")
-                        .IsRequired()
                         .HasColumnType("float");
 
                     b.Property<string>("W_PinCode")
@@ -226,7 +226,6 @@ namespace MTM_Warehouse.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<double?>("W_SpaceAvailable")
-                        .IsRequired()
                         .HasColumnType("float");
 
                     b.Property<double?>("W_TotalCapacity")
@@ -275,9 +274,7 @@ namespace MTM_Warehouse.Migrations
                 {
                     b.HasOne("MTM_Warehouse.Entities.JobProgress", "JobProgress")
                         .WithMany("ApprovalJobs")
-                        .HasForeignKey("JobProgressid")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("JobProgressId");
 
                     b.Navigation("JobProgress");
                 });
@@ -310,6 +307,15 @@ namespace MTM_Warehouse.Migrations
                     b.Navigation("WarehouseInfo");
                 });
 
+            modelBuilder.Entity("MTM_Warehouse.Entities.LoginEmp", b =>
+                {
+                    b.HasOne("MTM_Warehouse.Entities.WarehouseInfo", "WarehouseInfo")
+                        .WithMany("loginEmps")
+                        .HasForeignKey("WarehouseInfoId");
+
+                    b.Navigation("WarehouseInfo");
+                });
+
             modelBuilder.Entity("MTM_Warehouse.Entities.WarehouseItems", b =>
                 {
                     b.HasOne("MTM_Warehouse.Entities.WarehouseInfo", "WarehouseInfo")
@@ -321,8 +327,7 @@ namespace MTM_Warehouse.Migrations
 
             modelBuilder.Entity("MTM_Warehouse.Entities.ApprovalJobs", b =>
                 {
-                    b.Navigation("Approvals")
-                        .IsRequired();
+                    b.Navigation("Approvals");
                 });
 
             modelBuilder.Entity("MTM_Warehouse.Entities.JobProgress", b =>
@@ -340,6 +345,8 @@ namespace MTM_Warehouse.Migrations
                     b.Navigation("EmpDatas");
 
                     b.Navigation("WarehouseItems");
+
+                    b.Navigation("loginEmps");
                 });
 #pragma warning restore 612, 618
         }

@@ -5,7 +5,7 @@
 namespace MTM_Warehouse.Migrations
 {
     /// <inheritdoc />
-    public partial class mig01 : Migration
+    public partial class Initialize_DB : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -14,30 +14,13 @@ namespace MTM_Warehouse.Migrations
                 name: "JobProgress_DbData",
                 columns: table => new
                 {
-                    JobProgressid = table.Column<int>(type: "int", nullable: false)
+                    JobProgressId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     State = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_JobProgress_DbData", x => x.JobProgressid);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "loginEmps_DbData",
-                columns: table => new
-                {
-                    LoginEmpId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Username = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    AccessRights = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_loginEmps_DbData", x => x.LoginEmpId);
+                    table.PrimaryKey("PK_JobProgress_DbData", x => x.JobProgressId);
                 });
 
             migrationBuilder.CreateTable(
@@ -50,8 +33,8 @@ namespace MTM_Warehouse.Migrations
                     W_Location = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     W_PinCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     W_TotalCapacity = table.Column<double>(type: "float", nullable: false),
-                    W_SpaceAvailable = table.Column<double>(type: "float", nullable: false),
-                    W_PercentFull = table.Column<double>(type: "float", nullable: false)
+                    W_SpaceAvailable = table.Column<double>(type: "float", nullable: true),
+                    W_PercentFull = table.Column<double>(type: "float", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -70,17 +53,16 @@ namespace MTM_Warehouse.Migrations
                     To_Warehouse = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Item_Quantity = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Approval_Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    JobProgressid = table.Column<int>(type: "int", nullable: false)
+                    JobProgressId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ApprovalJobs_DbData", x => x.ApprovalJobsId);
                     table.ForeignKey(
-                        name: "FK_ApprovalJobs_DbData_JobProgress_DbData_JobProgressid",
-                        column: x => x.JobProgressid,
+                        name: "FK_ApprovalJobs_DbData_JobProgress_DbData_JobProgressId",
+                        column: x => x.JobProgressId,
                         principalTable: "JobProgress_DbData",
-                        principalColumn: "JobProgressid",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "JobProgressId");
                 });
 
             migrationBuilder.CreateTable(
@@ -103,6 +85,29 @@ namespace MTM_Warehouse.Migrations
                     table.PrimaryKey("PK_EmpData_DbData", x => x.EmpDataId);
                     table.ForeignKey(
                         name: "FK_EmpData_DbData_WarehouseInfo_DbData_WarehouseInfoId",
+                        column: x => x.WarehouseInfoId,
+                        principalTable: "WarehouseInfo_DbData",
+                        principalColumn: "WarehouseInfoId");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "loginEmps_DbData",
+                columns: table => new
+                {
+                    LoginEmpId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Username = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    AccessRights = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    WarehouseInfoId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_loginEmps_DbData", x => x.LoginEmpId);
+                    table.ForeignKey(
+                        name: "FK_loginEmps_DbData_WarehouseInfo_DbData_WarehouseInfoId",
                         column: x => x.WarehouseInfoId,
                         principalTable: "WarehouseInfo_DbData",
                         principalColumn: "WarehouseInfoId");
@@ -160,9 +165,9 @@ namespace MTM_Warehouse.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_ApprovalJobs_DbData_JobProgressid",
+                name: "IX_ApprovalJobs_DbData_JobProgressId",
                 table: "ApprovalJobs_DbData",
-                column: "JobProgressid");
+                column: "JobProgressId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Approvals_DbData_ApprovalJobsId",
@@ -178,6 +183,11 @@ namespace MTM_Warehouse.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_EmpData_DbData_WarehouseInfoId",
                 table: "EmpData_DbData",
+                column: "WarehouseInfoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_loginEmps_DbData_WarehouseInfoId",
+                table: "loginEmps_DbData",
                 column: "WarehouseInfoId");
 
             migrationBuilder.CreateIndex(
@@ -205,10 +215,10 @@ namespace MTM_Warehouse.Migrations
                 name: "loginEmps_DbData");
 
             migrationBuilder.DropTable(
-                name: "WarehouseInfo_DbData");
+                name: "JobProgress_DbData");
 
             migrationBuilder.DropTable(
-                name: "JobProgress_DbData");
+                name: "WarehouseInfo_DbData");
         }
     }
 }

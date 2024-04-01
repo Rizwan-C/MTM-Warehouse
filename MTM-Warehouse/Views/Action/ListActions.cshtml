@@ -1,4 +1,11 @@
-﻿
+﻿@model ListPageCountService
+
+@{
+    var w_count = Model.w_count;
+    var r_count = Model.r_count;
+    var e_count = Model.e_count; 
+}
+
 
 <nav class="navbar navbar-expand-lg bg-dark navbar-dark py-3">
     <div class="container">
@@ -18,13 +25,16 @@
                 <li class="nav-item">
                     <a asp-controller="Action" asp-action="ReportPage" class="nav-link mx-4"><strong>Reports</strong></a>
                 </li>
+                <li class="nav-item">
+                    <a asp-controller="Home" asp-action="Logout" class="btn btn-outline-danger btn-sm btn-floating mx-4 p-2">Logout</a>
+                </li>
             </ul>
         </div>
     </div>
 </nav>
 
 
-@*<div class="container m-5">
+@*<div class="container m-5">asda
 
      <div class="container">
         <div class="row justify-content-evenly">
@@ -52,7 +62,7 @@
         </div>
     </div>
     </div> *@
-
+      
     <div class="container my-1">
         <div class="row g-auto mx-auto my-5 justify-content-evenly">
 
@@ -62,7 +72,7 @@
                     <div class="card-body">
                     <h5 class="card-title text-center text-info"><strong>Warehouse</strong></h5>
                         <p class="card-text text-center">Number of warehouse</p>
-                        <p class="card-text text-center fs-1"><strong>- 0 -</strong></p>
+                    <p class="card-text text-center fs-1"><strong>- @w_count -</strong></p>
                         <div class="col-12">
                             <div class="d-grid gap-2">
                                 <a asp-controller="Action" asp-action="AddWarehousePage" class="btn btn-outline-dark btn-sm btn-floating" type="button" role="button"><strong class="fs-3">+</strong></a>
@@ -78,7 +88,7 @@
                     <div class="card-body">
                     <h5 class="card-title text-center text-info"><strong>Roles</strong></h5>
                         <p class="card-text text-center">Number of Roles assigned</p>
-                        <p class="card-text text-center fs-1"><strong>- 0 -</strong></p>
+                    <p class="card-text text-center fs-1"><strong>- @r_count -</strong></p>
                         <div class="col-12">
                             <div class="d-grid gap-2">
                                 <a asp-controller="Action" asp-action="AddManagingRoles" class="btn btn-outline-dark btn-sm btn-floating" type="button" role="button"><strong class="fs-3">+</strong></a>
@@ -94,7 +104,7 @@
                     <div class="card-body">
                     <h5 class="card-title text-center text-info"><strong>Employees</strong></h5>
                         <p class="card-text text-center">Number of Employees</p>
-                        <p class="card-text text-center fs-1"><strong>- 0 -</strong></p>
+                    <p class="card-text text-center fs-1"><strong>- @e_count -</strong></p>
                         <div class="col-12">
                             <div class="d-grid gap-2">
                                 <a asp-controller="Action" asp-action="AddEmployeeData" class="btn btn-outline-dark btn-sm btn-floating" type="button" role="button"><strong class="fs-3">+</strong></a>
@@ -106,5 +116,17 @@
         </div>
     </div>
 
+    <div class="container">
+
+        @if (TempData.ContainsKey("LastActionMessage"))
+        {
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                @TempData["LastActionMessage"]
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
+
+    </div>
+    
 
 

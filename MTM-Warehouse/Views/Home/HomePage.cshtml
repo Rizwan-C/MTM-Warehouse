@@ -1,5 +1,14 @@
-﻿
+﻿@model List<WarehouseInfo>
 
+@{
+    var isWareHousePresent = false;
+
+    if(Model[0].WarehouseInfoId > 0)
+    {
+        isWareHousePresent = true;
+    }
+    var counter = 0;
+}
 
 <nav class="navbar navbar-expand-lg bg-dark navbar-dark py-3">
     <div class="container">
@@ -53,10 +62,67 @@
     </div>
 }
 
-<div class="container my-5">
-    <div class="no-item-message text-center ">
-        <p>You don't have anything to view.</p>
-        <p>Start by adding warehouse.</p>
-        <p>Go to <strong>Actions</strong> page</p>
+
+@if (!isWareHousePresent)
+{
+    <div class="container my-5">
+        <div class="no-item-message text-center ">
+            <p>You don't have anything to view.</p>
+            <p>Start by adding warehouse.</p>
+            <p>Go to <strong>Actions</strong> page</p>
+        </div>
     </div>
-</div>
+}
+else
+{
+    
+    <div class="container">
+
+        <div class="container mt-4">
+            <h4 class="text-center mb-4 bg-dark text-white ">All Warehouse</h4>
+        </div>
+
+    </div>
+
+
+    <div class="container mt-5">
+
+        @foreach(var warehouse in Model)
+        {
+            counter++;
+
+            <div class="card mb-3">
+                <div class="row g-0 align-items-center">
+                    <div class="col-1" style="padding: 0;">
+                        <p class="card-text text-center" style="padding: 0;">@counter</p>
+                    </div>
+
+                    <div class="col-2 align-items-start p-0">
+                        <img src="~/images/W-graphic.jpg" class="img-fluid rounded-start" style="width: 100px; height: 100px; padding: 0;">
+                    </div>
+
+                    <div class="col-5 p-0">
+                        <div class="card-body p-0">
+                            <h5 class="card-title">@warehouse.W_Name</h5>
+                            <p class="card-text">
+                                <i class="fas fa-map-marker-alt"></i> @warehouse.W_Location
+                            </p>
+
+                        </div>
+                    </div>
+
+                    <div class="col-4 p-0">
+                        <div class="card-body" style="padding: 2px;">
+                            <p class="card-text">Capacity : @warehouse.W_TotalCapacity Sq.Ft</p>
+                            <a asp-controller="Warehouse" asp-action="OpenWarehouse" asp-route="@warehouse.WarehouseInfoId" class="btn btn-outline-primary btn-sm btn-floating mx-4 p-2">Open Warehouse</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+ 
+        }
+    </div>
+
+}
+

@@ -1,8 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 using MTM_Warehouse.Entities;
+using MTM_Warehouse.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddSingleton<IWarehouseInfoService, WarehouseInfoService>();
 
 builder.Services.AddDistributedMemoryCache(); // Needed to store session in memory
 builder.Services.AddSession(options =>
