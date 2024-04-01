@@ -36,11 +36,11 @@
 
 
 
-<section class="bg-dark text-light p-2 text-sm-start">
-    <div class="card mb-3">
-        <div class="row g-0 align-items-center">
+<section class="bg-dark p-2 text-light border-3">
+    <div class="card mb-3 border-4">
+        <div class="row g-0 align-items-center bg-dark">
 
-            <div class="col-4 p-0">
+            <div class="col-4 px-5">
                 <div class="card-body p-0">
                     <h5 class="card-title fs-3">@ViewData["Title"]</h5>
                     <p class="card-text">
@@ -50,7 +50,7 @@
                 </div>
             </div>
 
-            <div class="col-4 p-0">
+            <div class="col-4 p-0 justify-content-center">
                 <div class="card-body" style="padding: 2px;">
                     <p class="card-text">Total Capacity : @Model.warehouseInfoModelObj.W_TotalCapacity Sq.Ft</p>
                     <p class="card-text">Avalilable : @Model.warehouseInfoModelObj.W_SpaceAvailable Sq.Ft</p>
@@ -58,9 +58,10 @@
                 </div>
             </div>
 
-            <div class="col-4 align-items-start p-0">
+            <div class="col-4 d-flex justify-content-end px-5">
                 <img src="~/images/W-graphic.jpg" class="img-fluid rounded-start" style="width: 150px; height: 150px; padding: 0;">
             </div>
+
 
         </div>
     </div>
@@ -76,22 +77,22 @@
             <div class="col-12 mb-3">
                 <div class="card ">
                     <div class="row g-0">
-                        <div class="col-md-4 p-0">
+                        <div class="col-4 p-0">
                             <div class="card-body p-1">
                                 <h5 class="card-title text-center text-info text-white bg-dark p-3 m-0"><strong>Managers</strong></h5>
                             </div>
                         </div>
 
-                        <div class="col-md-4 p-0 ">
+                        <div class="col-4 p-0">
                             <div class="card-body p-1">
-                                <p class="card-text text-center fs-1 m-0 p-0"><strong>Total managers assigned to this warehouse</strong></p>
-                                <p class="card-text text-center fs-1 m-0 p-0"><strong class="px-5"> <u>@Model.loginEmpModelObj.Count</u> </strong></p>
+                                <p class="card-text text-center m-0 p-0 fs-6"><strong ">Total managers assigned to this warehouse</strong></p>
+                                <p class="card-text text-center m-0 p-0 fs-6"><strong class="px-5" > <u>@Model.loginEmpModelObj.Count</u> </strong></p>
                             </div>
                         </div>
 
-                        <div class="col-md-4 p-0">
+                        <div class="col-4 p-0">
                             <div class="card-body p-1 d-flex justify-content-center align-items-center" style="height: 100%;">
-                                <a asp-controller="Action" asp-action="AddManager" class="btn btn-outline-dark btn-sm btn-floating" role="button"><strong class="fs-3">Add manager</strong></a>
+                                <a asp-controller="Action" asp-action="AddManager" class="btn btn-outline-dark btn-sm btn-floating" role="button"><strong class="fs-6">Add manager</strong></a>
                             </div>
                         </div>
 
@@ -103,22 +104,22 @@
             <div class="col-12 mb-3">
                 <div class="card ">
                     <div class="row g-0">
-                        <div class="col-md-4 p-0">
+                        <div class="col-4 p-0">
                             <div class="card-body p-1">
                                 <h5 class="card-title text-center text-info text-white bg-dark p-3 m-0"><strong>Employee</strong></h5>
                             </div>
                         </div>
 
-                        <div class="col-md-4 p-0 ">
+                        <div class="col-4 p-0 ">
                             <div class="card-body p-1">
-                                <p class="card-text text-center fs-1 m-0 p-0"><strong>Total employees working at this warehouse</strong></p>
-                                <p class="card-text text-center fs-1 m-0 p-0"><strong class="px-5"> <u>@Model.empDataModelObj.Count</u> </strong></p>
+                                <p class="card-text text-center fs-6 m-0 p-0"><strong>Total employees working at this warehouse</strong></p>
+                                <p class="card-text text-center fs-6 m-0 p-0"><strong class="px-5"> <u>@Model.empDataModelObj.Count</u> </strong></p>
                             </div>
                         </div>
 
-                        <div class="col-md-4 p-0">
+                        <div class="col-4 p-0">
                             <div class="card-body p-1 d-flex justify-content-center align-items-center" style="height: 100%;">
-                                <a asp-controller="Action" asp-action="AddEmployee" class="btn btn-outline-dark btn-sm btn-floating" role="button"><strong class="fs-3">Add Employees</strong></a>
+                                <a asp-controller="Action" asp-action="AddEmployee" class="btn btn-outline-dark btn-sm btn-floating" role="button"><strong class="fs-6">Add Employees</strong></a>
                             </div>
                         </div>
 
@@ -130,22 +131,22 @@
             <div class="col-12 mb-3">
                 <div class="card ">
                     <div class="row g-0">
-                        <div class="col-md-4 p-0">
+                        <div class="col-4 p-0">
                             <div class="card-body p-1">
                                 <h5 class="card-title text-center text-info text-white bg-dark p-3 m-0"><strong>Itmes</strong></h5>
                             </div>
                         </div>
 
-                        <div class="col-md-4 p-0 ">
+                        <div class="col-4 p-0 ">
                             <div class="card-body p-1">
-                                <p class="card-text text-center fs-1 m-0 p-0"><strong>Total items present in this warehouse</strong></p>
-                                <p class="card-text text-center fs-1 m-0 p-0"><strong class="px-5"> <u>@Model.allItemsModelObj.Count</u> </strong></p>
+                                <p class="card-text text-center fs-6 m-0 p-0"><strong>Total items present in this warehouse</strong></p>
+                                <p class="card-text text-center fs-6 m-0 p-0"><strong class="px-5"> <u>@Model.allItemsModelObj.Count</u> </strong></p>
                             </div>
                         </div>
 
-                        <div class="col-md-4 p-0">
+                        <div class="col-4 p-0">
                             <div class="card-body p-1 d-flex justify-content-center align-items-center" style="height: 100%;">
-                                <a asp-controller="Action" asp-action="AddItems" class="btn btn-outline-dark btn-sm btn-floating" role="button"><strong class="fs-3">Add items</strong></a>
+                                <a asp-controller="Action" asp-action="AddItems" class="btn btn-outline-dark btn-sm btn-floating" role="button"><strong class="fs-6">Add items</strong></a>
                             </div>
                         </div>
 

@@ -19,7 +19,7 @@ namespace MTM_Warehouse.Controllers
         //    return View(loginEmp);
         //}
 
-        [HttpGet("/login")]
+        
         public IActionResult LoginPage()
         {            
             return View();

@@ -39,20 +39,6 @@
 </nav>
 
 
-@* <div class="navbar">
-        <img class="navbar-img" src="~/images/logo.jpg" alt="no_logo">
-        <div class="navbar-brand">MTM Warehouse</div>
-        <div class="nav">
-            <a asp-controller="Home" asp-action="HomePage" class="nav-link">Home</a>
-            <a asp-controller="Action" asp-action="ListActions" class="nav-link">Actions</a>
-            <a class="nav-link" href="#">Reports</a>
-        </div>
-        <div class="navbar-search-bar">
-            <label for="searchInput" class="form-label">Search Warehouse</label>
-            <input type="text" id="searchInput" class="form-control" placeholder="Search Warehouse">
-            <button class="btn btn-primary" type="button">Search</button>
-        </div>
-    </div> *@
 
 @if (TempData.ContainsKey("LastActionMessage"))
 {
@@ -114,7 +100,8 @@ else
                     <div class="col-4 p-0">
                         <div class="card-body" style="padding: 2px;">
                             <p class="card-text">Capacity : @warehouse.W_TotalCapacity Sq.Ft</p>
-                            <a asp-controller="Warehouse" asp-action="OpenWarehouse" asp-route="@warehouse.WarehouseInfoId" class="btn btn-outline-primary btn-sm btn-floating mx-4 p-2">Open Warehouse</a>
+                            <a asp-controller="Warehouse" asp-action="OpenWarehouse" asp-route-id="@warehouse.WarehouseInfoId" class="btn btn-outline-primary btn-sm btn-floating mx-4 p-2">Open Warehouse</a>
+
                         </div>
                     </div>
 
