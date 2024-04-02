@@ -11,15 +11,16 @@ namespace MTM_Warehouse.Controllers
     {
 
         private AllDbContext _context;
-        private IWarehouseInfoService _warehouseInfoService;
-        public WarehouseController(AllDbContext allDbContext, IWarehouseInfoService warehouseInfoService)
+        private IWarehouseService _warehouseInfoService;
+
+        public WarehouseController(AllDbContext allDbContext, IWarehouseService warehouseInfoService)
         {
             _context = allDbContext;
             _warehouseInfoService = warehouseInfoService;
         }
 
 
-        [HttpGet("/view/warehouse")] 
+        [HttpGet("/view/warehouse/{id}")] 
         public IActionResult OpenWarehouse(int id)
         {            
             WarehouseInfo? warehouseInfo = _context.WarehouseInfo_DbData.Find(id);
@@ -78,9 +79,9 @@ namespace MTM_Warehouse.Controllers
         [HttpGet("/warehouse/{id}/addemployee")]
         public IActionResult AddEmployeePage(int id)
         {
-            EmployeeWarehouseModel managerWarehouseModel = new EmployeeWarehouseModel();
-            managerWarehouseModel.WarehouseInfo = _context.WarehouseInfo_DbData.Find(id);
-            return View(managerWarehouseModel);
+            EmployeeWarehouseModel employeeWarehouseModel = new EmployeeWarehouseModel();
+            employeeWarehouseModel.WarehouseInfo = _context.WarehouseInfo_DbData.Find(id);
+            return View(employeeWarehouseModel);
         }
 
         [HttpPost("/warehouse/addemployee")]
@@ -101,11 +102,56 @@ namespace MTM_Warehouse.Controllers
                 _context.EmpData_DbData.Add(employeeWarehouseModel.EmpData);
                 _context.SaveChanges();
 
-                TempData["LastActionMessage"] = $"The Manager \"{employeeWarehouseModel.EmpData.Name}\" was added sucessfully.";
+                TempData["LastActionMessage"] = $"The Employee \"{employeeWarehouseModel.EmpData.Name}\" was added sucessfully.";
 
                 employeeWarehouseModel.EmpData = new EmpData();
 
-                return RedirectToAction("OpenWarehouse", employeeWarehouseModel ); //new { employeeWarehouseModel = employeeWarehouseModel }
+                return RedirectToAction("AddEmployeePage", new {id = employeeWarehouseModel.WarehouseInfo.WarehouseInfoId} ); 
+            }
+
+            return View("AddEmployeePage");
+        }
+
+
+
+        [HttpGet("/warehouse/{id}/additem")]
+        public IActionResult AddItemPage(int id)
+        {
+            ItemWarehouseModel itemWarehouseModel = new ItemWarehouseModel();
+            itemWarehouseModel.WarehouseInfo = _context.WarehouseInfo_DbData.Find(id);
+            return View(itemWarehouseModel);
+        }
+
+        [HttpPost("/warehouse/additem")]
+        public IActionResult AddItem(ItemWarehouseModel itemWarehouseModel)
+        {
+            Console.WriteLine("WarehouseController :: POST : AddItem()");
+            itemWarehouseModel.WarehouseItems.WarehouseInfoId = itemWarehouseModel.WarehouseInfo.WarehouseInfoId;
+            Console.WriteLine("W-ID > ", itemWarehouseModel.WarehouseItems.WarehouseInfoId);
+
+            // Clear ModelState errors related to WarehouseInfo
+            foreach (var key in ModelState.Keys.Where(k => k.StartsWith("WarehouseInfo")).ToList())
+            {
+                ModelState.Remove(key);
+            }
+
+            itemWarehouseModel.WarehouseInfo = _context.WarehouseInfo_DbData.Find(itemWarehouseModel.WarehouseInfo.WarehouseInfoId);
+            itemWarehouseModel.WarehouseItems.Item_SpaceAccuired = itemWarehouseModel.WarehouseItems.Item_Capacity_Quant * itemWarehouseModel.WarehouseItems.Item_Unit_Quant;
+            _warehouseInfoService.WarehouseSpaceAvailable(itemWarehouseModel.WarehouseInfo, (double)itemWarehouseModel.WarehouseItems.Item_SpaceAccuired);
+            _warehouseInfoService.WarehousePercentFull(itemWarehouseModel.WarehouseInfo);
+
+            if (ModelState.IsValid)
+            {
+                _context.WarehouseInfo_DbData.Update(itemWarehouseModel.WarehouseInfo);
+
+                _context.WarehouseItems_DbData.Add(itemWarehouseModel.WarehouseItems);
+                _context.SaveChanges();
+
+                TempData["LastActionMessage"] = $"Item - \"{itemWarehouseModel.WarehouseItems.Item_Name}\" was added sucessfully.";
+
+                itemWarehouseModel.WarehouseItems = new WarehouseItems();
+
+                return RedirectToAction("AddItemPage", new { id = itemWarehouseModel.WarehouseInfo.WarehouseInfoId });
             }
 
             return View("AddEmployeePage");
@@ -116,9 +162,3 @@ namespace MTM_Warehouse.Controllers
 }
 
 
-
-
-//var allWarehouseInfoForManager = _context.loginEmps_DbData
-//    .Include(w => w.WarehouseInfoId)
-//    .Where(w => w.WarehouseInfoId == managerWarehouseModel.WarehouseInfo.WarehouseInfoId)
-//    .FirstOrDefault();

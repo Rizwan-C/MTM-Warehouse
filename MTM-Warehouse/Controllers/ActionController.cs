@@ -8,8 +8,8 @@ namespace MTM_Warehouse.Controllers
     {
 
         private AllDbContext _context;
-        private IWarehouseInfoService _warehouseInfoService;
-        public ActionController(AllDbContext allDbContext, IWarehouseInfoService warehouseInfoService)
+        private IWarehouseService _warehouseInfoService;
+        public ActionController(AllDbContext allDbContext, IWarehouseService warehouseInfoService)
         {
             _context = allDbContext;
             _warehouseInfoService = warehouseInfoService;
