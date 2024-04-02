@@ -55,7 +55,7 @@
     <h4 class="text-center mb-4" style="font-weight: bold; font-size:30px  ; color: #005f9b;">Employee Information</h4>
 </div>
 
-<div class="container-md">
+<div class="container-md ">
 
     <form asp-controller="Warehouse" asp-action="AddEmployee" method="post" enctype="application/x-www-form-urlencoded">
 
@@ -103,7 +103,7 @@
                         <label for="EmpData.Phone">Phone #</label>
                     </div>
                     <div class="col-8">
-                        <input type="tel" id="phone" name="phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" title="Format: 123-456-7890" asp-for="EmpData.Phone">
+                        <input type="tel" id="phone" name="phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" title="Format: 123-456-7890" class="form-control " asp-for="EmpData.Phone">
                     </div>
                 </div>
 
@@ -120,18 +120,6 @@
                 <input type="hidden" asp-for="WarehouseInfo.WarehouseInfoId">
                 <input type="hidden" asp-for="WarehouseInfo.W_Name">
 
-                @*
-                
-                Name
-                Email
-                Phone
-                Address
-                PinCode
-                FirstDay
-                LastDay
-                WarehouseInfoId
-
-                *@
 
             </div>
 
