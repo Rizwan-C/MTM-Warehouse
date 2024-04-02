@@ -40,7 +40,7 @@ namespace MTM_Warehouse.Controllers
 
 
         [HttpGet("/warehouse/{id}/addmanager")]
-        public IActionResult AddManagerPage(int id)         
+        public IActionResult AddManagerPage(int id)
         {
             ManagerWarehouseModel managerWarehouseModel = new ManagerWarehouseModel();
             managerWarehouseModel.WarehouseInfo = _context.WarehouseInfo_DbData.Find(id);
@@ -55,8 +55,6 @@ namespace MTM_Warehouse.Controllers
             Console.WriteLine("WarehouseController :: POST : AddManager()");
             managerWarehouseModel.LoginEmp.WarehouseInfoId = managerWarehouseModel.WarehouseInfo.WarehouseInfoId;
             Console.WriteLine("> ", managerWarehouseModel.LoginEmp.WarehouseInfoId);
-            //managerWarehouseModel.LoginEmp.WarehouseInfoId = managerWarehouseModel.WarehouseInfo.WarehouseInfoId;
-            //managerWarehouseModel.LoginEmp.WarehouseInfo = _context.WarehouseInfo_DbData.Find(managerWarehouseModel.WarehouseInfo.WarehouseInfoId);
 
             // Clear ModelState errors related to WarehouseInfo
             foreach (var key in ModelState.Keys.Where(k => k.StartsWith("WarehouseInfo")).ToList())
@@ -66,7 +64,6 @@ namespace MTM_Warehouse.Controllers
 
             if (ModelState.IsValid)
             {                
-
                 _context.loginEmps_DbData.Add(managerWarehouseModel.LoginEmp);
                 _context.SaveChanges();
 
@@ -76,6 +73,16 @@ namespace MTM_Warehouse.Controllers
             }
             return View("AddManagerPage", managerWarehouseModel);
         }
+
+
+        [HttpGet("/warehouse/{id}/addemployee")]
+        public IActionResult AddEmployeePage(int id)
+        {
+            EmployeeWarehouseModel managerWarehouseModel = new EmployeeWarehouseModel();
+            managerWarehouseModel.WarehouseInfo = _context.WarehouseInfo_DbData.Find(id);
+            return View(managerWarehouseModel);
+        }
+
 
     }
 }
