@@ -49,7 +49,7 @@ namespace MTM_Warehouse.Controllers
         }
 
 
-        [HttpPost("/warehouse/addmanager/hello")]
+        [HttpPost("/warehouse/addmanager")]
         public IActionResult AddManager(ManagerWarehouseModel managerWarehouseModel)
         {
             Console.WriteLine("WarehouseController :: POST : AddManager()");
@@ -81,6 +81,34 @@ namespace MTM_Warehouse.Controllers
             EmployeeWarehouseModel managerWarehouseModel = new EmployeeWarehouseModel();
             managerWarehouseModel.WarehouseInfo = _context.WarehouseInfo_DbData.Find(id);
             return View(managerWarehouseModel);
+        }
+
+        [HttpPost("/warehouse/addemployee")]
+        public IActionResult AddEmployee(EmployeeWarehouseModel employeeWarehouseModel)
+        {
+            Console.WriteLine("WarehouseController :: POST : AddEmployee()");
+            employeeWarehouseModel.EmpData.WarehouseInfoId = employeeWarehouseModel.WarehouseInfo.WarehouseInfoId;
+            Console.WriteLine("W-ID > ", employeeWarehouseModel.EmpData.WarehouseInfoId);
+
+            // Clear ModelState errors related to WarehouseInfo
+            foreach (var key in ModelState.Keys.Where(k => k.StartsWith("WarehouseInfo")).ToList())
+            {
+                ModelState.Remove(key);
+            }
+
+            if (ModelState.IsValid)
+            {
+                _context.EmpData_DbData.Add(employeeWarehouseModel.EmpData);
+                _context.SaveChanges();
+
+                TempData["LastActionMessage"] = $"The Manager \"{employeeWarehouseModel.EmpData.Name}\" was added sucessfully.";
+
+                employeeWarehouseModel.EmpData = new EmpData();
+
+                return RedirectToAction("OpenWarehouse", employeeWarehouseModel ); //new { employeeWarehouseModel = employeeWarehouseModel }
+            }
+
+            return View("AddEmployeePage");
         }
 
 
