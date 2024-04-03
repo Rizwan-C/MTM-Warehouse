@@ -109,7 +109,7 @@ namespace MTM_Warehouse.Controllers
                 return RedirectToAction("AddEmployeePage", new {id = employeeWarehouseModel.WarehouseInfo.WarehouseInfoId} ); 
             }
 
-            return View("AddEmployeePage");
+            return View("AddEmployeePage", employeeWarehouseModel);
         }
 
 
