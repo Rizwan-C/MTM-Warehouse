@@ -1,4 +1,5 @@
-﻿@model EmployeeWarehouseModel
+﻿@model EmpData
+
 
 
 <header>
@@ -57,57 +58,57 @@
 
 <div class="container-md ">
 
-    <form asp-controller="Warehouse" asp-action="AddEmployee" method="post" enctype="application/x-www-form-urlencoded">
+    <form asp-controller="Warehouse" asp-action="EditEmployee" method="post" enctype="application/x-www-form-urlencoded">
 
         <div class="row">
             <div class="container col-6 my-4">
 
                 <div class="row">
                     <div class="col-4">
-                        <label for="EmpData.Name">Name</label>
+                        <label for="Name">Name</label>
                     </div>
                     <div class="col-8">
-                        <input type="text" class="form-control " asp-for="EmpData.Name">
+                        <input type="text" class="form-control " asp-for="Name">
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-4">
-                        <label for="EmpData.Email">Email</label>
+                        <label for="Email">Email</label>
                     </div>
                     <div class="col-8">
-                        <input type="text" class="form-control " asp-for="EmpData.Email">
+                        <input type="text" class="form-control " asp-for="Email">
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-4">
-                        <label for="EmpData.Address">Address</label>
+                        <label for="Address">Address</label>
                     </div>
                     <div class="col-8">
-                        <input type="text" class="form-control " asp-for="EmpData.Address">
+                        <input type="text" class="form-control " asp-for="Address">
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-4">
-                        <label for="EmpData.PinCode">Postal Code</label>
+                        <label for="PinCode">Postal Code</label>
                     </div>
                     <div class="col-8">
-                        <input type="text" class="form-control " asp-for="EmpData.PinCode">
+                        <input type="text" class="form-control " asp-for="PinCode">
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-4">
-                        <label for="EmpData.Phone">Phone #</label>
+                        <label for="Phone">Phone #</label>
                     </div>
                     <div class="col-8">
-                        <input type="text" title="Format: 123-456-7890" class="form-control " asp-for="EmpData.Phone">
+                        <input type="text" title="Format: 123-456-7890" class="form-control " asp-for="Phone">
                     </div>
                 </div>
 
-               
+
                 <div class="row">
                     <div class="col-4">
                         <label for="WarehouseInfo.W_Name">Works in </label>
@@ -117,8 +118,9 @@
                     </div>
                 </div>
 
-                <input type="hidden" asp-for="@Model.WarehouseInfo.WarehouseInfoId">
-                <input type="hidden" asp-for="@Model.WarehouseInfo.W_Name">
+                <input type="hidden" asp-for="WarehouseInfo.WarehouseInfoId">
+                <input type="hidden" asp-for="WarehouseInfo.W_Name">
+                <input type="hidden" asp-for="EmpDataId">
 
 
             </div>
@@ -126,7 +128,7 @@
             <div class="col-5 pt-3 row justify-content-center">
                 <div class="col-12">
                     <button type="submit" class="btn btn-outline-primary ">Submit</button>
-                    <a asp-controller="Warehouse" asp-action="OpenWarehouse" asp-route-id="@Model.WarehouseInfo.WarehouseInfoId" class=" btn btn-outline-danger"><strong>Cancel</strong></a>
+                    <a asp-controller="Warehouse" asp-action="ViewItemsPage" asp-route-id="WarehouseInfo.WarehouseInfoId" class=" btn btn-outline-danger"><strong>Cancel</strong></a>
                 </div>
 
                 <div class="col-12 justify-content-center">
@@ -147,7 +149,7 @@
 
 
 
-                
+
 
             </div>
 

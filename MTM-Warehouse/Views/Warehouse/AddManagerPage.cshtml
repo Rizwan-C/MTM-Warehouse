@@ -132,7 +132,17 @@
                     <button type="submit" class="btn btn-outline-primary ">Submit</button>
                     <a asp-controller="Warehouse" asp-action="OpenWarehouse" asp-route-id="@Model.WarehouseInfo.WarehouseInfoId" class=" btn btn-outline-danger"><strong>Cancel</strong></a>
                 </div>
-
+                <div class="col-12 justify-content-center">
+                    @if (TempData.ContainsKey("LastActionMessage"))
+                    {
+                        <div class="container px-5">
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                @TempData["LastActionMessage"]
+                            </div>
+                        </div>
+                    }
+                </div>
                 <div class="col-12 align-items-start">
                     <div asp-validation-summary="All" class="text-danger" style="list-style:none"></div>
                 </div>

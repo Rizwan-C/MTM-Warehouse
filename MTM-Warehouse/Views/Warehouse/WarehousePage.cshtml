@@ -69,7 +69,7 @@
 
 <div class="container mb-0">
     <div class="d-sm-flex align-items-center justify-content-end p-3 mb-0">
-        <a asp-controller="Home" asp-action="HomePage" class="btn btn-outline-secondary btn-sm btn-floating col-2"><strong>Back</strong></a>
+        <a asp-controller="Home" asp-action="HomePage" class="btn btn-secondary btn-sm btn-floating col-2"><strong>Back</strong></a>
     </div>
 </div>
 
@@ -93,22 +93,25 @@
             <div class="col-12 mb-3">
                 <div class="card ">
                     <div class="row g-0">
-                        <div class="col-4 p-0">
+                        <div class="col-3 p-0">
                             <div class="card-body p-1">
                                 <h5 class="card-title text-center text-info text-white bg-dark p-3 m-0"><strong>Managers</strong></h5>
                             </div>
                         </div>
 
-                        <div class="col-4 p-0">
+                        <div class="col-5 p-0">
                             <div class="card-body p-1">
                                 <p class="card-text text-center m-0 p-0 fs-6"><strong>Total managers assigned to this warehouse</strong></p>
-                                <p class="card-text text-center m-0 p-0 fs-6"><strong class="px-5" > <u>@Model.loginEmpModelObj.Count</u> </strong></p>
+                                <p class="card-text text-center m-0 p-0 fs-6"><strong class="px-5 fs-3" style="color:green"> <u>@Model.loginEmpModelObj.Count</u> </strong></p>
                             </div>
                         </div>
 
-                        <div class="col-4 p-0">
-                            <div class="card-body p-1 d-flex justify-content-center align-items-center" style="height: 100%;">
-                                <a asp-controller="Warehouse" asp-action="AddManagerPage" asp-route-id="@Model.warehouseInfoModelObj.WarehouseInfoId" class="btn btn-outline-dark btn-sm btn-floating" role="button"><strong class="fs-6">Add manager</strong></a>
+                        <div class="col-4 p-0  row g-1">
+                            <div class="card-body p-1 align-items-center col-6" style="height: 100%;">
+                                <a asp-controller="Warehouse" asp-action="AddManagerPage" asp-route-id="@Model.warehouseInfoModelObj.WarehouseInfoId" class="col-12  btn btn-outline-primary btn-sm btn-floating" role="button"><strong class="fs-6">Add manager</strong></a>
+                            </div>
+                            <div class="card-body p-1 align-items-center col-6" style="height: 100%;">
+                                <a asp-controller="Warehouse" asp-action="ViewManagerPage" asp-route-id="@Model.warehouseInfoModelObj.WarehouseInfoId" class="col-12 btn btn-outline-info btn-sm btn-floating" role="button"><strong class="fs-6 ">View manager</strong></a>
                             </div>
                         </div>
 
@@ -120,22 +123,25 @@
             <div class="col-12 mb-3">
                 <div class="card ">
                     <div class="row g-0">
-                        <div class="col-4 p-0">
+                        <div class="col-3 p-0">
                             <div class="card-body p-1">
-                                <h5 class="card-title text-center text-info text-white bg-dark p-3 m-0"><strong>Employee</strong></h5>
+                                <h5 class="card-title text-center text-info text-white bg-dark p-3 m-0"><strong>Employees</strong></h5>
                             </div>
                         </div>
 
-                        <div class="col-4 p-0 ">
+                        <div class="col-5 p-0 ">
                             <div class="card-body p-1">
                                 <p class="card-text text-center fs-6 m-0 p-0"><strong>Total employees working at this warehouse</strong></p>
-                                <p class="card-text text-center fs-6 m-0 p-0"><strong class="px-5"> <u>@Model.empDataModelObj.Count</u> </strong></p>
+                                <p class="card-text text-center fs-6 m-0 p-0"><strong class="px-5 fs-3" style="color:green"> <u>@Model.empDataModelObj.Count</u> </strong></p>
                             </div>
                         </div>
 
-                        <div class="col-4 p-0">
-                            <div class="card-body p-1 d-flex justify-content-center align-items-center" style="height: 100%;">
-                                <a asp-controller="Warehouse" asp-action="AddEmployeePage" asp-route-id="@Model.warehouseInfoModelObj.WarehouseInfoId" class="btn btn-outline-dark btn-sm btn-floating" role="button"><strong class="fs-6">Add Employees</strong></a>
+                        <div class="col-4 p-0 row g-1">
+                            <div class="card-body p-1 align-items-center col-6" style="height: 100%;">
+                                <a asp-controller="Warehouse" asp-action="AddEmployeePage" asp-route-id="@Model.warehouseInfoModelObj.WarehouseInfoId" class="col-12 btn btn-outline-primary btn-sm btn-floating" role="button"><strong class="fs-6 col-12">Add Employees</strong></a>
+                            </div>
+                            <div class="card-body p-1 align-items-center col-6" style="height: 100%;">
+                                <a asp-controller="Warehouse" asp-action="ViewEmployeePage" asp-route-id="@Model.warehouseInfoModelObj.WarehouseInfoId" class="col-12 btn btn-outline-info btn-sm btn-floating" role="button"><strong class="fs-6 ">View Employees</strong></a>
                             </div>
                         </div>
 
@@ -147,22 +153,25 @@
             <div class="col-12 mb-3">
                 <div class="card ">
                     <div class="row g-0">
-                        <div class="col-4 p-0">
+                        <div class="col-3 p-0">
                             <div class="card-body p-1">
-                                <h5 class="card-title text-center text-info text-white bg-dark p-3 m-0"><strong>Itmes</strong></h5>
+                                <h5 class="card-title text-center text-info text-white bg-dark p-3 m-0"><strong>Items</strong></h5>
                             </div>
                         </div>
 
-                        <div class="col-4 p-0 ">
+                        <div class="col-5 p-0 ">
                             <div class="card-body p-1">
                                 <p class="card-text text-center fs-6 m-0 p-0"><strong>Total items present in this warehouse</strong></p>
-                                <p class="card-text text-center fs-6 m-0 p-0"><strong class="px-5"> <u>@Model.allItemsModelObj.Count</u> </strong></p>
+                                <p class="card-text text-center fs-6 m-0 p-0"><strong class="px-5 fs-3" style="color:green"> <u>@Model.allItemsModelObj.Count</u> </strong></p>
                             </div>
                         </div>
 
-                        <div class="col-4 p-0">
-                            <div class="card-body p-1 d-flex justify-content-center align-items-center" style="height: 100%;">
-                                <a asp-controller="Warehouse" asp-action="AddItemPage" asp-route-id="@Model.warehouseInfoModelObj.WarehouseInfoId" class="btn btn-outline-dark btn-sm btn-floating" role="button"><strong class="fs-6">Add items</strong></a>
+                        <div class="col-4 p-0 row g-1">
+                            <div class="card-body p-1 align-items-center col-6" style="height: 100%;">
+                                <a asp-controller="Warehouse" asp-action="AddItemPage" asp-route-id="@Model.warehouseInfoModelObj.WarehouseInfoId" class="col-12 btn btn-outline-primary btn-sm btn-floating" role="button"><strong class="fs-6">Add items</strong></a>
+                            </div>
+                            <div class="card-body p-1 align-items-center col-6" style="height: 100%;">
+                                <a asp-controller="Warehouse" asp-action="ViewItemsPage" asp-route-id="@Model.warehouseInfoModelObj.WarehouseInfoId" class="col-12 btn btn-outline-info btn-sm btn-floating" role="button"><strong class="fs-6 ">View Items</strong></a>
                             </div>
                         </div>
 

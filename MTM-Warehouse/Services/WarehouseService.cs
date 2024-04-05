@@ -13,7 +13,7 @@ namespace MTM_Warehouse.Services
 
         public WarehouseInfo WarehouseSpaceAvailable(WarehouseInfo warehouseInfo , double spaceOccupiedByItem)
         {
-            warehouseInfo.W_SpaceAvailable = warehouseInfo.W_SpaceAvailable - spaceOccupiedByItem;            
+            warehouseInfo.W_SpaceAvailable = warehouseInfo.W_TotalCapacity - spaceOccupiedByItem;            
             return warehouseInfo;
         }
     }
