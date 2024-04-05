@@ -270,15 +270,6 @@ namespace MTM_Warehouse.Controllers
         public IActionResult AddItem(ItemWarehouseModel itemWarehouseModel)
         {
             WarehouseInfo warehouseInfo = _context.WarehouseInfo_DbData.Find(itemWarehouseModel.WarehouseInfo.WarehouseInfoId);
-            if (warehouseInfo.W_SpaceAvailable < (itemWarehouseModel.WarehouseItems.Item_Capacity_Quant * itemWarehouseModel.WarehouseItems.Item_Unit_Quant))
-            {
-                ModelState.AddModelError("WarehouseCapacity", "There is not enough space in the warehouse for the requested quantity of items.");
-                return View(itemWarehouseModel);
-            }
-
-            Console.WriteLine("WarehouseController :: POST : AddItem()");
-            itemWarehouseModel.WarehouseItems.WarehouseInfoId = itemWarehouseModel.WarehouseInfo.WarehouseInfoId;
-            Console.WriteLine("W-ID > ", itemWarehouseModel.WarehouseItems.WarehouseInfoId);
 
             // Clear ModelState errors related to WarehouseInfo
             foreach (var key in ModelState.Keys.Where(k => k.StartsWith("WarehouseInfo")).ToList())
@@ -286,14 +277,27 @@ namespace MTM_Warehouse.Controllers
                 ModelState.Remove(key);
             }
 
-            itemWarehouseModel.WarehouseInfo = _context.WarehouseInfo_DbData.Find(itemWarehouseModel.WarehouseInfo.WarehouseInfoId);
-            itemWarehouseModel.WarehouseItems.Item_SpaceAccuired = itemWarehouseModel.WarehouseItems.Item_Capacity_Quant * itemWarehouseModel.WarehouseItems.Item_Unit_Quant;
-           
 
+            if (warehouseInfo.W_SpaceAvailable < (itemWarehouseModel.WarehouseItems.Item_Capacity_Quant * itemWarehouseModel.WarehouseItems.Item_Unit_Quant))
+            {
+                ModelState.AddModelError("WarehouseCapacity", "There is not enough space in the warehouse for the requested quantity of items.");
+                return View("AddItemPage", itemWarehouseModel);
+            }
+
+            Console.WriteLine("WarehouseController :: POST : AddItem()");
+            itemWarehouseModel.WarehouseItems.WarehouseInfoId = itemWarehouseModel.WarehouseInfo.WarehouseInfoId;
+            Console.WriteLine("W-ID > ", itemWarehouseModel.WarehouseItems.WarehouseInfoId);
+           
+            
             if (ModelState.IsValid)
             {
-                _context.WarehouseInfo_DbData.Update(itemWarehouseModel.WarehouseInfo);
+                itemWarehouseModel.WarehouseInfo = _context.WarehouseInfo_DbData.Find(itemWarehouseModel.WarehouseInfo.WarehouseInfoId);
+                itemWarehouseModel.WarehouseItems.Item_SpaceAccuired = itemWarehouseModel.WarehouseItems.Item_Capacity_Quant * itemWarehouseModel.WarehouseItems.Item_Unit_Quant;
 
+                // Detach the warehouseInfo entity to prevent tracking conflicts
+                //_context.Entry(warehouseInfo).State = EntityState.Detached;
+
+                _context.WarehouseInfo_DbData.Update(itemWarehouseModel.WarehouseInfo);
                 _context.WarehouseItems_DbData.Add(itemWarehouseModel.WarehouseItems);
                 _context.SaveChanges();
 
@@ -350,21 +354,23 @@ namespace MTM_Warehouse.Controllers
         public IActionResult EditItem(WarehouseItems items)
         {
             WarehouseInfo warehouseInfo = _context.WarehouseInfo_DbData.Find(items.WarehouseInfoId);
-            if (warehouseInfo.W_SpaceAvailable < (items.Item_Capacity_Quant * items.Item_Unit_Quant))
-            {
-                ModelState.AddModelError("WarehouseCapacity", "There is not enough space in the warehouse for the requested quantity of items.");
-                return View(items);
-            }
-
-            items.Item_SpaceAccuired = items.Item_Unit_Quant * items.Item_Capacity_Quant;
-
             foreach (var key in ModelState.Keys.Where(k => k.StartsWith("WarehouseInfo")).ToList())
             {
                 ModelState.Remove(key);
             }
+            if (warehouseInfo.W_SpaceAvailable < (items.Item_Capacity_Quant * items.Item_Unit_Quant))
+            {
+                ModelState.AddModelError("WarehouseCapacity", "There is not enough space in the warehouse for the requested quantity of items.");
+                return View("EditItemPage", items);
+            }
+            // Detach the warehouseInfo entity to prevent tracking conflicts
+            _context.Entry(warehouseInfo).State = EntityState.Detached;
+
+            items.Item_SpaceAccuired = items.Item_Unit_Quant * items.Item_Capacity_Quant;
+
+            
             if (ModelState.IsValid)
-            {                
-                _context.Entry(items.WarehouseInfo).State = EntityState.Unchanged;
+            {
                 _context.WarehouseItems_DbData.Update(items);
                 _context.SaveChanges();
 
@@ -373,10 +379,10 @@ namespace MTM_Warehouse.Controllers
                 return RedirectToAction("ViewItemsPage", new { id = items.WarehouseInfoId });
             }
 
-
             return View("EditItemPage", items);
         }
 
+        
 
         [HttpPost("/warehouse/{id}/deleteItem")]
         public IActionResult DeleteItem(int id)
