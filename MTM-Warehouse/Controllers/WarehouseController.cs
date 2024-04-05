@@ -32,8 +32,7 @@ namespace MTM_Warehouse.Controllers
             {
                 total += (double)item.Item_SpaceAccuired;
             }
-            warehouseInfo = _warehouseInfoService.WarehouseSpaceAvailable(warehouseInfo, total);
-            warehouseInfo = _warehouseInfoService.WarehousePercentFull(warehouseInfo);
+            
 
             WarehouseModel warehouseModel = new WarehouseModel()
             {
@@ -43,6 +42,8 @@ namespace MTM_Warehouse.Controllers
                 allItemsModelObj = allItems
             };
 
+            warehouseInfo = _warehouseInfoService.WarehouseSpaceAvailable(warehouseInfo, total);
+            warehouseInfo = _warehouseInfoService.WarehousePercentFull(warehouseInfo);
             _context.WarehouseInfo_DbData.Update(warehouseInfo);
             _context.SaveChanges();
 
@@ -261,6 +262,7 @@ namespace MTM_Warehouse.Controllers
         {
             ItemWarehouseModel itemWarehouseModel = new ItemWarehouseModel();
             itemWarehouseModel.WarehouseInfo = _context.WarehouseInfo_DbData.Find(id);
+            
             return View(itemWarehouseModel);
         }
 
@@ -287,9 +289,6 @@ namespace MTM_Warehouse.Controllers
             itemWarehouseModel.WarehouseInfo = _context.WarehouseInfo_DbData.Find(itemWarehouseModel.WarehouseInfo.WarehouseInfoId);
             itemWarehouseModel.WarehouseItems.Item_SpaceAccuired = itemWarehouseModel.WarehouseItems.Item_Capacity_Quant * itemWarehouseModel.WarehouseItems.Item_Unit_Quant;
            
-
-
-
 
             if (ModelState.IsValid)
             {
@@ -328,14 +327,35 @@ namespace MTM_Warehouse.Controllers
         [HttpGet("/warehouse/edit/item/{id}")]
         public IActionResult EditItemPage(int id)
         {
+
             WarehouseItems item = _context.WarehouseItems_DbData.Where(i => i.WarehouseItemsId == id).Include(emp => emp.WarehouseInfo).First();
+
+            WarehouseInfo warehouseInfo = _context.WarehouseInfo_DbData.Find(item.WarehouseInfoId);           
+             
+            List<WarehouseItems> allItems = _context.WarehouseItems_DbData.Where(items => items.WarehouseInfoId == item.WarehouseInfoId).ToList();
+            double total = 0;
+            foreach (WarehouseItems itm in allItems)
+            {
+                total += (double)itm.Item_SpaceAccuired;
+            }
+            warehouseInfo = _warehouseInfoService.WarehouseSpaceAvailable(warehouseInfo, total);
+            warehouseInfo = _warehouseInfoService.WarehousePercentFull(warehouseInfo);
+            _context.WarehouseInfo_DbData.Update(warehouseInfo);
+            _context.SaveChanges();
+
             return View(item);
         }
 
         [HttpPost("/warehouse/edit/Item")]
         public IActionResult EditItem(WarehouseItems items)
         {
-            // WarehouseInfo warehouse = _context.WarehouseInfo_DbData.Find(items.WarehouseInfoId);
+            WarehouseInfo warehouseInfo = _context.WarehouseInfo_DbData.Find(items.WarehouseInfoId);
+            if (warehouseInfo.W_SpaceAvailable < (items.Item_Capacity_Quant * items.Item_Unit_Quant))
+            {
+                ModelState.AddModelError("WarehouseCapacity", "There is not enough space in the warehouse for the requested quantity of items.");
+                return View(items);
+            }
+
             items.Item_SpaceAccuired = items.Item_Unit_Quant * items.Item_Capacity_Quant;
 
             foreach (var key in ModelState.Keys.Where(k => k.StartsWith("WarehouseInfo")).ToList())
