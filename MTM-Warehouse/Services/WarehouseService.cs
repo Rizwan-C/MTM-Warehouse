@@ -16,5 +16,18 @@ namespace MTM_Warehouse.Services
             warehouseInfo.W_SpaceAvailable = warehouseInfo.W_TotalCapacity - spaceOccupiedByItem;            
             return warehouseInfo;
         }
+
+        public double W_Percentage(WarehouseInfo warehouseInfo)
+        { 
+            double percent = (double)warehouseInfo.W_PercentFull;
+            return percent;         
+        }
+
+        public double W_SpaceAvailabe(WarehouseInfo warehouseInfo)
+        {
+            double space = (double)warehouseInfo.W_SpaceAvailable;
+            return space;
+        }
+
     }
 }
