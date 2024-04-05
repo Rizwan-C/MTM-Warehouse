@@ -1,4 +1,5 @@
-﻿@model EmployeeWarehouseModel
+﻿@model LoginEmp
+
 
 
 <header>
@@ -35,14 +36,14 @@
         <div class="d-sm-flex align-items-center justify-content-between">
 
             <div class="container col-4 mx-2">
-                <h1 class="text-start" style="color: yellowgreen">Employee Details</h1>
+                <h1 class="text-start" style="color: yellowgreen">Manager Details</h1>
                 <p class="my-4 text-start">
-                    Please put all the information that has been asked realted to the employee.
+                    Please put all the information that has been asked realted to the manger.
                 </p>
             </div>
 
             <div class="col-3 p-3">
-                <img class="img-fluid rounded img-thumbnail" style="height: 200px; width:200px" src="~/images/Employees.png">
+                <img class="img-fluid rounded img-thumbnail" style="height: 200px; width:200px" src="~/images/manager-micro.png">
             </div>
 
         </div>
@@ -52,73 +53,79 @@
 
 
 <div class="container mt-4">
-    <h4 class="text-center mb-4" style="font-weight: bold; font-size:30px  ; color: #005f9b;">Employee Information</h4>
+    <h4 class="text-center mb-4" style="font-weight: bold; font-size:30px  ; color: #005f9b;">Manager Information</h4>
 </div>
 
-<div class="container-md ">
+<div class="container-md">
 
-    <form asp-controller="Warehouse" asp-action="AddEmployee" method="post" enctype="application/x-www-form-urlencoded">
+    <form asp-controller="Warehouse" asp-action="EditManager" method="post" enctype="application/x-www-form-urlencoded">
 
         <div class="row">
             <div class="container col-6 my-4">
 
                 <div class="row">
                     <div class="col-4">
-                        <label for="EmpData.Name">Name</label>
+                        <label for="W_Name">Name</label>
                     </div>
                     <div class="col-8">
-                        <input type="text" class="form-control " asp-for="EmpData.Name">
+                        <input type="text" class="form-control " asp-for="Name">
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-4">
-                        <label for="EmpData.Email">Email</label>
+                        <label for="W_Location">Email</label>
                     </div>
                     <div class="col-8">
-                        <input type="text" class="form-control " asp-for="EmpData.Email">
+                        <input type="text" class="form-control " asp-for="Email">
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-4">
+                        <label for="W_PinCode">Username</label>
+                    </div>
+                    <div class="col-8">
+                        <input type="text" class="form-control " asp-for="Username">
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-4">
-                        <label for="EmpData.Address">Address</label>
+                        <label for="W_TotalCapacity">Password</label>
                     </div>
                     <div class="col-8">
-                        <input type="text" class="form-control " asp-for="EmpData.Address">
+                        <input type="password" step="0.01" class="form-control " asp-for="Password">
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-4">
-                        <label for="EmpData.PinCode">Postal Code</label>
+                        <label for="W_PinCode">Access rights level</label>
                     </div>
                     <div class="col-8">
-                        <input type="text" class="form-control " asp-for="EmpData.PinCode">
+                        <select asp-for="AccessRights" class="form-select form-control" required>
+                            <option selected>Select ...</option>
+                            @* <option value="">Select ...</option> *@
+                            <option value="alpha">Alpha</option>
+                            <option value="beta">Beta</option>
+                        </select>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-4">
-                        <label for="EmpData.Phone">Phone #</label>
+                        <label for="W_PinCode">Warehouse assigned</label>
                     </div>
                     <div class="col-8">
-                        <input type="text" title="Format: 123-456-7890" class="form-control " asp-for="EmpData.Phone">
+                        <input type="text" class="form-control " asp-for="WarehouseInfo.W_Name" readonly>
                     </div>
                 </div>
 
-               
-                <div class="row">
-                    <div class="col-4">
-                        <label for="WarehouseInfo.W_Name">Works in </label>
-                    </div>
-                    <div class="col-8">
-                        <input type="text" class="form-control " asp-for="WarehouseInfo.W_Name" readonly> <span> Warehouse</span>
-                    </div>
-                </div>
-
-                <input type="hidden" asp-for="@Model.WarehouseInfo.WarehouseInfoId">
-                <input type="hidden" asp-for="@Model.WarehouseInfo.W_Name">
+                <input type="hidden" asp-for="LoginEmpId">
+                <input type="hidden" asp-for="WarehouseInfoId">
+                <input type="hidden" asp-for="WarehouseInfo.WarehouseInfoId">
 
 
             </div>
@@ -126,29 +133,12 @@
             <div class="col-5 pt-3 row justify-content-center">
                 <div class="col-12">
                     <button type="submit" class="btn btn-outline-primary ">Submit</button>
-                    <a asp-controller="Warehouse" asp-action="OpenWarehouse" asp-route-id="@Model.WarehouseInfo.WarehouseInfoId" class=" btn btn-outline-danger"><strong>Cancel</strong></a>
-                </div>
-
-                <div class="col-12 justify-content-center">
-                    @if (TempData.ContainsKey("LastActionMessage"))
-                    {
-                        <div class="container px-5">
-                            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                                @TempData["LastActionMessage"]
-                            </div>
-                        </div>
-                    }
+                    <a asp-controller="Warehouse" asp-action="OpenWarehouse" asp-route-id="WarehouseInfo.WarehouseInfoId" class=" btn btn-outline-danger"><strong>Cancel</strong></a>
                 </div>
 
                 <div class="col-12 align-items-start">
                     <div asp-validation-summary="All" class="text-danger" style="list-style:none"></div>
                 </div>
-
-
-
-                
-
             </div>
 
         </div>

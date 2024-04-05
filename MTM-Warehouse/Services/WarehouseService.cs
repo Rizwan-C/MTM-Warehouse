@@ -2,7 +2,7 @@
 
 namespace MTM_Warehouse.Services
 {
-    public class WarehouseInfoService : IWarehouseInfoService
+    public class WarehouseService : IWarehouseService
     {
         public WarehouseInfo WarehousePercentFull(WarehouseInfo warehouseInfo)
         {                           
@@ -11,11 +11,9 @@ namespace MTM_Warehouse.Services
             return warehouseInfo;
         }
 
-        public WarehouseInfo WarehouseSpaceAvailable(WarehouseInfo warehouseInfo)
+        public WarehouseInfo WarehouseSpaceAvailable(WarehouseInfo warehouseInfo , double spaceOccupiedByItem)
         {
-
-            double percentageFull = (double)((warehouseInfo.W_SpaceAvailable / warehouseInfo.W_TotalCapacity) * 100);
-            warehouseInfo.W_PercentFull = Math.Truncate(percentageFull * 100) / 100;
+            warehouseInfo.W_SpaceAvailable = warehouseInfo.W_TotalCapacity - spaceOccupiedByItem;            
             return warehouseInfo;
         }
     }

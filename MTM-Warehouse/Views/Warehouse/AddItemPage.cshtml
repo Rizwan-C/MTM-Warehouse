@@ -1,4 +1,4 @@
-﻿@model EmployeeWarehouseModel
+﻿@model ItemWarehouseModel
 
 
 <header>
@@ -13,7 +13,7 @@
                 <ul class="navbar-nav ms-auto ">
                     <li class="nav-item">
                         <a asp-controller="Home" asp-action="HomePage" class="nav-link mx-4"><strong>Home</strong></a>
-                    </li>
+                    </li>   
                     <li class="nav-item">
                         <a asp-controller="Action" asp-action="ListActions" class="nav-link mx-4"><strong>Actions</strong></a>
                     </li>
@@ -35,14 +35,14 @@
         <div class="d-sm-flex align-items-center justify-content-between">
 
             <div class="container col-4 mx-2">
-                <h1 class="text-start" style="color: yellowgreen">Employee Details</h1>
+                <h1 class="text-start" style="color: yellowgreen">Items Details</h1>
                 <p class="my-4 text-start">
-                    Please put all the information that has been asked realted to the employee.
+                    Add your inventory.
                 </p>
             </div>
 
             <div class="col-3 p-3">
-                <img class="img-fluid rounded img-thumbnail" style="height: 200px; width:200px" src="~/images/Employees.png">
+                <img class="img-fluid rounded img-thumbnail" style="height: 200px; width:200px" src="~/images/Items.jpg">
             </div>
 
         </div>
@@ -52,65 +52,47 @@
 
 
 <div class="container mt-4">
-    <h4 class="text-center mb-4" style="font-weight: bold; font-size:30px  ; color: #005f9b;">Employee Information</h4>
+    <h4 class="text-center mb-4" style="font-weight: bold; font-size:30px  ; color: #005f9b;">Item Detail</h4>
 </div>
 
 <div class="container-md ">
 
-    <form asp-controller="Warehouse" asp-action="AddEmployee" method="post" enctype="application/x-www-form-urlencoded">
+    <form asp-controller="Warehouse" asp-action="AddItem" method="post" enctype="application/x-www-form-urlencoded">
 
         <div class="row">
             <div class="container col-6 my-4">
 
                 <div class="row">
                     <div class="col-4">
-                        <label for="EmpData.Name">Name</label>
+                        <label for="WarehouseItems.Item_Name">Name</label>
                     </div>
                     <div class="col-8">
-                        <input type="text" class="form-control " asp-for="EmpData.Name">
+                        <input type="text" class="form-control " asp-for="WarehouseItems.Item_Name">
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-4">
-                        <label for="EmpData.Email">Email</label>
+                    <div class="col-6">
+                        <label for="WarehouseItems.Item_Unit_Quant">Quantity Count</label>
                     </div>
-                    <div class="col-8">
-                        <input type="text" class="form-control " asp-for="EmpData.Email">
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-4">
-                        <label for="EmpData.Address">Address</label>
-                    </div>
-                    <div class="col-8">
-                        <input type="text" class="form-control " asp-for="EmpData.Address">
+                    <div class="col-6">
+                        <input type="number" step="0.1" class="form-control " asp-for="WarehouseItems.Item_Unit_Quant">
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-4">
-                        <label for="EmpData.PinCode">Postal Code</label>
+                    <div class="col-6">
+                        <label for="WarehouseItems.Item_Capacity_Quant">Space Required by 1 unit(in Sq. Ft)</label>
                     </div>
-                    <div class="col-8">
-                        <input type="text" class="form-control " asp-for="EmpData.PinCode">
+                    <div class="col-6">
+                        <input type="number" step="0.1" class="form-control " asp-for="WarehouseItems.Item_Capacity_Quant">
                     </div>
-                </div>
+                </div>                
+
 
                 <div class="row">
                     <div class="col-4">
-                        <label for="EmpData.Phone">Phone #</label>
-                    </div>
-                    <div class="col-8">
-                        <input type="text" title="Format: 123-456-7890" class="form-control " asp-for="EmpData.Phone">
-                    </div>
-                </div>
-
-               
-                <div class="row">
-                    <div class="col-4">
-                        <label for="WarehouseInfo.W_Name">Works in </label>
+                        <label for="WarehouseInfo.W_Name">Add in </label>
                     </div>
                     <div class="col-8">
                         <input type="text" class="form-control " asp-for="WarehouseInfo.W_Name" readonly> <span> Warehouse</span>
@@ -135,7 +117,7 @@
                         <div class="container px-5">
                             <div class="alert alert-success alert-dismissible fade show" role="alert">
                                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                                @TempData["LastActionMessage"]
+                                @TempData["LastActionMessage"]                                
                             </div>
                         </div>
                     }
@@ -145,9 +127,6 @@
                     <div asp-validation-summary="All" class="text-danger" style="list-style:none"></div>
                 </div>
 
-
-
-                
 
             </div>
 

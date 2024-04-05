@@ -2,9 +2,9 @@
 
 namespace MTM_Warehouse.Services
 {
-    public interface IWarehouseInfoService
+    public interface IWarehouseService
     {
-        public WarehouseInfo WarehouseSpaceAvailable(WarehouseInfo warehouseInfo);
+        public WarehouseInfo WarehouseSpaceAvailable(WarehouseInfo warehouseInfo, double spaceOccupiedByItem);
         public WarehouseInfo WarehousePercentFull(WarehouseInfo warehouseInfo);
     }
 }
