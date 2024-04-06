@@ -1,8 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
 namespace MTM_Warehouse.Entities
 {
-    public class AllDbContext : DbContext
+    public class AllDbContext : IdentityDbContext<User>
     {
 
         public AllDbContext( DbContextOptions<AllDbContext> dbContext) 
@@ -19,6 +21,47 @@ namespace MTM_Warehouse.Entities
         public DbSet<ApprovalJobs> ApprovalJobs_DbData { get; set; }
         public DbSet<JobProgress> JobProgress_DbData { get;set; }
 
+
+        public static async Task CreateAdminUser(IServiceProvider serviceProvider)
+        {
+            UserManager<User> userManager =
+                serviceProvider.GetRequiredService<UserManager<User>>();
+            RoleManager<IdentityRole> roleManager = serviceProvider
+                .GetRequiredService<RoleManager<IdentityRole>>();
+
+            // Define roles
+            string[] roleNames = { "super_user", "user", "restricted_user" };
+            // User details
+            (string username, string password, string role)[] userRoles = {
+                ("superuser", "admin", "super_user"),
+                ("user", "user", "user")
+            };
+
+            // Ensure all roles exist
+            foreach (var roleName in roleNames)
+            {
+                if (await roleManager.FindByNameAsync(roleName) == null)
+                {
+                    await roleManager.CreateAsync(new IdentityRole(roleName));
+                }
+            }
+
+            // Create users and assign roles
+            foreach (var (username, password, role) in userRoles)
+            {
+                if (await userManager.FindByNameAsync(username) == null)
+                {
+                    User user = new User { UserName = username };
+                    var result = await userManager.CreateAsync(user, password);
+
+                    if (result.Succeeded)
+                    {
+                        await userManager.AddToRoleAsync(user, role);
+                    }
+                }
+            }
+                       
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MTM_Warehouse.Entities;
 using MTM_Warehouse.Services;
 
@@ -29,12 +30,14 @@ namespace MTM_Warehouse.Controllers
         }
 
         [HttpGet("/manage/addWareHouse")]
+        [Authorize(Roles = "super_user")]
         public IActionResult AddWarehousePage() {         
             return View(new WarehouseInfo());
         }
 
 
         [HttpPost("/manage/addWareHouse")]
+        [Authorize(Roles = "super_user")]
         public IActionResult AddWarehouseInfo( WarehouseInfo warehouseInfo)
         {
             warehouseInfo.W_SpaceAvailable = warehouseInfo.W_TotalCapacity;
@@ -54,6 +57,13 @@ namespace MTM_Warehouse.Controllers
                 return View("AddWarehousePage", warehouseInfo); 
             }
         }
+
+        [HttpGet("/actions/moveItems")]
+        public IActionResult MoveItems()
+        {
+            return RedirectToAction();
+        }
+
 
     }
 }

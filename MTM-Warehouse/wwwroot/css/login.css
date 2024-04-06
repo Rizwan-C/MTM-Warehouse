@@ -1,11 +1,19 @@
-body {
-  background-color: #f5f5f5;
+/*body {
+  background-color: #f5f5f5;*/
   /* display: flex; */
-  justify-content: center;
+  /*justify-content: center;
   align-items: center;
   height: 1000vh;
   margin: 0;
+}*/
+
+@font-face {
+    font-family: 'CustomFont';
+    src: url('/fonts/customfont.woff2') format('woff2'), url('/fonts/customfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
 }
+
 
 .login-container {
     display: flex;
@@ -81,7 +89,7 @@ h2{
 /* Ensure that the body uses a full-screen layout */
 html, body {
     height: 100%;
-    background-color: #e9ecef; /* Slight grey background */
+    /* background-color: #e9ecef;  Slight grey background */
 }
 
 /* Center the login box both vertically and horizontally */
@@ -151,10 +159,10 @@ html, body {
 }
 
 
+
 body {
-    background-color: #fff;
+    /*background-color: #fff;*/
     margin: 0;
-    font-family: 'Arial', sans-serif;
 }
 
 .navbar {
@@ -203,4 +211,34 @@ body {
 .navbar-img {
     height: 3%;
     width: 3%;
+}
+
+
+.bg-image-ad {
+    background-image: url('/images/ad.jpg');
+    background-size: contain;
+    background-position: center;
+    height: 720px;
+    width: 1080px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.access-denied-container {
+    background-color: rgba(49, 48, 48, 0.8); 
+    padding: 40px;
+    border-radius: 15px;
+    color: white;
+}
+
+
+#register-user {
+    color: crimson;
+}
+
+#login-box{
+    background-color: #dbe1e0;
+
 }

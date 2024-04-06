@@ -1,0 +1,51 @@
+﻿@model RegisterViewModel
+
+
+
+<div class="container">
+    <!-- <div class="row"> -->
+    <div class="col-md-6 offset-md-3">
+        <h1>MTM Warehouse</h1>
+        <div class="login-container">
+            <div class="logo">
+                <img src="~/images/logo.jpg" alt="MTM Warehouse" />
+            </div>
+            <div class="form-group">
+                <form asp-controller="Login" asp-action="Register" method="post" enctype="application/x-www-form-urlencoded">
+                    <h2 class="text-center">Register</h2>
+                    <select asp-for="ManagerId" id="namesDropdown" class="form-control form-control-sm">
+                        <option value="">Your Name...</option>
+                        @foreach (LoginEmp emp in Model.LoginEmps)
+                        {
+                            if (emp.Username == null)
+                            {
+                                <option value="@emp.LoginEmpId" data-emp-id="@emp.LoginEmpId" data-emp-role="@emp.Role">@emp.Name</option>
+                            }
+                        }
+                    </select>
+                    <input type="text" class="form-control form-control-sm" placeholder="Username" asp-for="Username" required />
+                    <input type="password" class="form-control form-control-sm" placeholder="Password" asp-for="Password" required />
+                    <input type="password" class="form-control form-control-sm" placeholder="Confirm Password" asp-for="ConfirmPassword" required />
+                    <select asp-for="SelectedRole" id="rolesDropdown" class="form-control form-control-sm">
+                        <option value="">Select Role...</option>     
+                    </select>
+                     
+                    <button type="submit" class="btn btn-block login-btn">Regiser</button>
+                    <a asp-controller="Login" asp-action="LoginPage" class=" btn btn-outline-danger"><strong>Cancel</strong></a>
+                    <div asp-validation-summary="All" class="text-danger text-sm-start text-decoration-none fs-6"></div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- </div> -->
+</div>
+
+
+
+@if (TempData.ContainsKey("LastActionMessage"))
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["LastActionMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}

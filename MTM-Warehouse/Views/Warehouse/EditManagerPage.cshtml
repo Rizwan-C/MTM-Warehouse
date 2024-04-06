@@ -22,7 +22,9 @@
                         <a asp-controller="Action" asp-action="ReportPage" class="nav-link mx-4"><strong>Reports</strong></a>
                     </li>
                     <li class="nav-item">
-                        <a asp-controller="Home" asp-action="Logout" class="btn btn-outline-danger btn-sm btn-floating mx-4 p-2">Logout</a>
+                        <form class="form-inline" asp-controller="Login" asp-action="LogOut" method="post">
+                            <input type="submit" class="btn btn-outline-danger btn-sm btn-floating mx-4 p-2" value="Logout" />
+                        </form>
                     </li>
                 </ul>
             </div>
@@ -84,32 +86,14 @@
 
                 <div class="row">
                     <div class="col-4">
-                        <label for="W_PinCode">Username</label>
+                        <label for="W_PinCode">Access rights</label>
                     </div>
                     <div class="col-8">
-                        <input type="text" class="form-control " asp-for="Username">
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-4">
-                        <label for="W_TotalCapacity">Password</label>
-                    </div>
-                    <div class="col-8">
-                        <input type="password" step="0.01" class="form-control " asp-for="Password">
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-4">
-                        <label for="W_PinCode">Access rights level</label>
-                    </div>
-                    <div class="col-8">
-                        <select asp-for="AccessRights" class="form-select form-control" required>
+                        <select asp-for="Role" class="form-select form-control" required>
                             <option selected>Select ...</option>
-                            @* <option value="">Select ...</option> *@
-                            <option value="alpha">Alpha</option>
-                            <option value="beta">Beta</option>
+                            <option value="super_user">SuperUser</option>
+                            <option value="user">User</option>
+                            <option value="restricted_user">Restricted User</option>
                         </select>
                     </div>
                 </div>

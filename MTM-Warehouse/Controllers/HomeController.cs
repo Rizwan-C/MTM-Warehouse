@@ -8,17 +8,11 @@ namespace MTM_Warehouse.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-
         private AllDbContext _context;
-        private IWarehouseService _warehouseInfoService;
-        public HomeController(AllDbContext allDbContext, IWarehouseService warehouseInfoService, ILogger<HomeController> logger)
+        public HomeController(AllDbContext allDbContext)
         {
             _context = allDbContext;
-            _warehouseInfoService = warehouseInfoService;
-            _logger = logger;   
         }
-
 
         public IActionResult HomePage()
         {

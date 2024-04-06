@@ -22,7 +22,9 @@
                         <a asp-controller="Action" asp-action="ReportPage" class="nav-link mx-4"><strong>Reports</strong></a>
                     </li>
                     <li class="nav-item">
-                        <a asp-controller="Home" asp-action="Logout" class="btn btn-outline-danger btn-sm btn-floating mx-4 p-2">Logout</a>
+                        <form class="form-inline" asp-controller="Login" asp-action="LogOut" method="post">
+                            <input type="submit" class="btn btn-outline-danger btn-sm btn-floating mx-4 p-2" value="Logout" />
+                        </form>
                     </li>
                 </ul>
             </div>
@@ -87,7 +89,7 @@
                 <tr>
                     <td>@emp.Name</td>
                     <td>@emp.Email</td>
-                    <td>@emp.AccessRights</td>
+                    <td>@emp.Role</td>
                     <td class="d-flex justify-content-center row  m-0">
                         <a class="btn btn-outline-info btn-sm btn-floating col-3" asp-controller="Warehouse" asp-action="EditManagerPage" asp-route-id="@emp.LoginEmpId">Edit</a>
                         <span class="col-1"></span>

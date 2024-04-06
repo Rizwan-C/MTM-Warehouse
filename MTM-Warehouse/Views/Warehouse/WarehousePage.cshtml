@@ -26,7 +26,9 @@
                         <a asp-controller="Action" asp-action="ReportPage" class="nav-link mx-4"><strong>Reports</strong></a>
                     </li>
                     <li class="nav-item">
-                        <a asp-controller="Home" asp-action="Logout" class="btn btn-outline-danger btn-sm btn-floating mx-4 p-2">Logout</a>
+                        <form class="form-inline" asp-controller="Login" asp-action="LogOut" method="post">
+                            <input type="submit" class="btn btn-outline-danger btn-sm btn-floating mx-4 p-2" value="Logout" />
+                        </form>
                     </li>
                 </ul>
             </div>
@@ -102,7 +104,7 @@
                         <div class="col-5 p-0">
                             <div class="card-body p-1">
                                 <p class="card-text text-center m-0 p-0 fs-6"><strong>Total managers assigned to this warehouse</strong></p>
-                                <p class="card-text text-center m-0 p-0 fs-6"><strong class="px-5 fs-3" style="color:green"> <u>@Model.loginEmpModelObj.Count</u> </strong></p>
+                                <p class="card-text text-center m-0 p-0 fs-6"><strong class="px-5 fs-6 badge bg-success rounded-pill"> @Model.loginEmpModelObj.Count </strong></p>
                             </div>
                         </div>
 
@@ -132,7 +134,7 @@
                         <div class="col-5 p-0 ">
                             <div class="card-body p-1">
                                 <p class="card-text text-center fs-6 m-0 p-0"><strong>Total employees working at this warehouse</strong></p>
-                                <p class="card-text text-center fs-6 m-0 p-0"><strong class="px-5 fs-3" style="color:green"> <u>@Model.empDataModelObj.Count</u> </strong></p>
+                                <p class="card-text text-center fs-6 m-0 p-0 "><strong class="px-5 fs-6 badge bg-success rounded-pill"> @Model.empDataModelObj.Count </strong></p>
                             </div>
                         </div>
 
@@ -162,7 +164,7 @@
                         <div class="col-5 p-0 ">
                             <div class="card-body p-1">
                                 <p class="card-text text-center fs-6 m-0 p-0"><strong>Total items present in this warehouse</strong></p>
-                                <p class="card-text text-center fs-6 m-0 p-0"><strong class="px-5 fs-3" style="color:green"> <u>@Model.allItemsModelObj.Count</u> </strong></p>
+                                <p class="card-text text-center fs-6 m-0 p-0 "><strong class="px-5 fs-6 badge bg-success rounded-pill"> @Model.allItemsModelObj.Count </strong></p>
                             </div>
                         </div>
 
