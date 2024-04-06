@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using MTM_Warehouse.Entities;
@@ -12,11 +14,14 @@ namespace MTM_Warehouse.Controllers
 
         private AllDbContext _context;
         private IWarehouseService _warehouseInfoService;
+        private UserManager<User> _userManager;            
+        
 
-        public WarehouseController(AllDbContext allDbContext, IWarehouseService warehouseInfoService)
+        public WarehouseController(AllDbContext allDbContext, IWarehouseService warehouseInfoService, UserManager<User> userManager)
         {
             _context = allDbContext;
             _warehouseInfoService = warehouseInfoService;
+            _userManager = userManager;
         }
 
 
@@ -53,6 +58,7 @@ namespace MTM_Warehouse.Controllers
         // -- ALL MANAGER ITEMS --
         // --       STARTS      --
         [HttpGet("/warehouse/{id}/addmanager")]
+        [Authorize(Roles = "super_user")]
         public IActionResult AddManagerPage(int id)
         {
             ManagerWarehouseModel managerWarehouseModel = new ManagerWarehouseModel();
@@ -63,6 +69,7 @@ namespace MTM_Warehouse.Controllers
 
 
         [HttpPost("/warehouse/addmanager")]
+        [Authorize(Roles = "super_user")]
         public IActionResult AddManager(ManagerWarehouseModel managerWarehouseModel)
         {
             Console.WriteLine("WarehouseController :: POST : AddManager()");
@@ -89,6 +96,7 @@ namespace MTM_Warehouse.Controllers
 
 
         [HttpGet("/warehouse/manager/{id}")]
+        [Authorize(Roles = "super_user")]
         public IActionResult ViewManagerPage(int id)
         {
             List<LoginEmp> ManagerList = _context.loginEmps_DbData
@@ -105,6 +113,7 @@ namespace MTM_Warehouse.Controllers
         }
 
         [HttpGet("/warehouse/edit/manager/{id}")]
+        [Authorize(Roles = "super_user")]
         public IActionResult EditManagerPage(int id)
         {
             LoginEmp manager = _context.loginEmps_DbData.Where(i => i.LoginEmpId == id).Include(emp => emp.WarehouseInfo).FirstOrDefault();
@@ -112,6 +121,7 @@ namespace MTM_Warehouse.Controllers
         }
 
         [HttpPost("/warehouse/edit/manager")]
+        [Authorize(Roles = "super_user")]
         public IActionResult EditManager(LoginEmp manager)
         {
             foreach (var key in ModelState.Keys.Where(k => k.StartsWith("WarehouseInfo")).ToList())
@@ -129,21 +139,50 @@ namespace MTM_Warehouse.Controllers
                 return RedirectToAction("ViewManagerPage", new { id = manager.WarehouseInfoId });
             }
 
-
             return View("EditManagerPage", manager);
         }
 
         [HttpPost("/warehouse/{id}/deletemanager")]
-        public IActionResult DeleteManager(int id)
+        [Authorize(Roles = "super_user")]
+        public async Task<IActionResult> DeleteManager(int id)
         {
             var manager = _context.loginEmps_DbData.Find(id);
-            _context.loginEmps_DbData.Remove(manager);
-            _context.SaveChanges();
+
+            if (manager.Username != null)
+            {
+                string? username = manager.Username;
+                _context.loginEmps_DbData.Remove(manager);
+                _context.SaveChanges();
+
+                var user = await _userManager.FindByNameAsync(username);
+                if (user != null)
+                {
+                    var result = await _userManager.DeleteAsync(user);
+                    if (result.Succeeded)
+                    {
+                        Console.WriteLine("Username : '" + username + "' has been deleted successfully"); // Assuming you have a UserList action to redirect to
+                    }
+                    else
+                    {
+                        foreach (var error in result.Errors)
+                        {
+                            Console.WriteLine("", error.Description);
+                        }
+                    }
+                }
+
+            }
+            else
+            {
+                _context.loginEmps_DbData.Remove(manager);
+                _context.SaveChanges();
+            }
 
             TempData["LastActionMessage"] = $"The Manager \"{manager.Name}\" deleted successfully.";
 
             return RedirectToAction("ViewManagerPage", new { id = manager.WarehouseInfoId });
         }
+
 
 
         // --        ENDS       --
@@ -155,6 +194,7 @@ namespace MTM_Warehouse.Controllers
         // --       STARTS      --
 
         [HttpGet("/warehouse/{id}/addemployee")]
+        [Authorize(Roles = "super_user,user")]
         public IActionResult AddEmployeePage(int id)
         {
             EmployeeWarehouseModel employeeWarehouseModel = new EmployeeWarehouseModel();
@@ -192,6 +232,7 @@ namespace MTM_Warehouse.Controllers
 
 
         [HttpGet("/warehouse/Employee/{id}")]
+        [Authorize(Roles = "super_user,user")]
         public IActionResult ViewEmployeePage(int id)
         {
             List<EmpData> EmpList = _context.EmpData_DbData
@@ -208,6 +249,7 @@ namespace MTM_Warehouse.Controllers
         }
 
         [HttpGet("/warehouse/edit/employee/{id}")]
+        [Authorize(Roles = "super_user,user")]
         public IActionResult EditEmployeePage(int id)
         {
             EmpData manager = _context.EmpData_DbData.Where(i => i.EmpDataId == id).Include(emp => emp.WarehouseInfo).First();
@@ -215,6 +257,7 @@ namespace MTM_Warehouse.Controllers
         }
 
         [HttpPost("/warehouse/edit/employee")]
+        [Authorize(Roles = "super_user,user")]
         public IActionResult EditEmployee(EmpData employee)
         {
             foreach (var key in ModelState.Keys.Where(k => k.StartsWith("WarehouseInfo")).ToList())
@@ -238,6 +281,7 @@ namespace MTM_Warehouse.Controllers
 
 
         [HttpPost("/warehouse/{id}/deletemployee")]
+        [Authorize(Roles = "super_user,user")]
         public IActionResult DeleteEmployee(int id)
         {
             var employee = _context.EmpData_DbData.Find(id);

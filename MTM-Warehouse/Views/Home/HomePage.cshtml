@@ -1,4 +1,7 @@
 ﻿@model List<WarehouseInfo>
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<User> _signInManager
+
 
 @{
     var isWareHousePresent = false;
@@ -17,7 +20,11 @@
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navmenu">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="justify-content-center px-5"><spap class="mx-3 text-primary ">Hello! @ViewBag.Name</spap></div>
+        @if (_signInManager.IsSignedIn(User))
+        {
+            <div class="justify-content-center px-5"><spap class="mx-5 text-white">Hello! @User.Identity.Name</spap></div>
+        }
+        @* <div class="justify-content-center px-5"><spap class="mx-3 text-primary ">Hello! @ViewBag.Name</spap></div> *@
         
         <div class="collapse navbar-collapse" id="navmenu">
             <ul class="navbar-nav ms-auto ">
@@ -31,8 +38,11 @@
                     <a asp-controller="Action" asp-action="ReportPage" class="nav-link mx-4"><strong>Reports</strong></a>
                 </li>
                 <li class="nav-item">
-                    <a asp-controller="Home" asp-action="Logout" class="btn btn-outline-danger btn-sm btn-floating mx-4 p-2">Logout</a>
+                    <form class="form-inline" asp-controller="Login" asp-action="LogOut" method="post">
+                        <input type="submit" class="btn btn-outline-danger btn-sm btn-floating mx-4 p-2" value="Logout" />
+                    </form>
                 </li>
+
             </ul>
         </div>
     </div>

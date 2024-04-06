@@ -13,14 +13,10 @@ namespace MTM_Warehouse.Entities
 
         [RegularExpression(@"^((?!\.)[\w\-_.]*[^.])(@\w+)(\.\w+(\.\w+)?[^.\W])$", ErrorMessage = "Invalid Email")]
         public string? Email { get; set; }
+       
+        public string? Role { get; set; }
 
-        [Required(ErrorMessage = "Needs Username")]
         public string? Username { get; set; }
-
-        [Required(ErrorMessage = "Needs Password")]
-        public string? Password { get; set; }
-                
-        public string? AccessRights { get; set; }
 
         public ICollection<Approvals>? Approvals { get; set; }
 

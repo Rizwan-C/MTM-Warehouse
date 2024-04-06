@@ -1,3 +1,15 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'CustomFont';
+}
+
+body {
+    margin: 0;
+
+}
+
 html {
   font-size: 14px;
 }
@@ -12,11 +24,19 @@ html {
   box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
-html {
+/*html {
   position: relative;
   min-height: 100%;
-}
+}*/
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 10px;
+    font-family: 'CustomFont';
+}
+
+@font-face {
+    font-family: 'CustomFont';
+    src: url('/fonts/Roboto-Regular.ttf') format('woff');
+    font-weight: normal;
+    font-style: normal;
 }

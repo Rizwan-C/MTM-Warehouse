@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using MTM_Warehouse.Entities;
 using MTM_Warehouse.Services;
@@ -14,6 +16,23 @@ builder.Services.AddSession(options =>
     options.Cookie.IsEssential = true;
 });
 
+builder.Services.AddIdentity<User, IdentityRole>(options =>
+{
+    // Password settings
+    options.Password.RequireDigit = false;
+    options.Password.RequiredLength = 4;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequireUppercase = false;
+    options.Password.RequireLowercase = false; 
+    options.Password.RequiredUniqueChars = 0;
+}).AddEntityFrameworkStores<AllDbContext>().AddDefaultTokenProviders();
+
+//builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+//    .AddCookie(options =>
+//    {       
+//        options.AccessDeniedPath = "/Login/AccessDenied"; 
+//    });
+//options.LoginPath = "/Login/LoginPage"; 
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -34,10 +53,18 @@ app.UseStaticFiles();
 app.UseRouting();
 app.UseSession();
 
+
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Login}/{action=LoginPage}/{id?}");
+
+var scopeFactory = app.Services.GetRequiredService<IServiceScopeFactory>();
+using (var scope = scopeFactory.CreateScope())
+{
+    await AllDbContext.CreateAdminUser(scope.ServiceProvider);
+}
 
 app.Run();

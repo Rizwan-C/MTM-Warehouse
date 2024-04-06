@@ -1,0 +1,42 @@
+﻿<nav class="navbar navbar-expand-lg bg-dark navbar-dark py-3 mb-5">
+    <div class="container">
+        <img class="navbar-img mx-3" src="~/images/logo.jpg" alt="no_logo">
+        <div class="navbar-brand">MTM Warehouse</div>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navmenu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navmenu">
+            <ul class="navbar-nav ms-auto ">
+                <li class="nav-item">
+                    <a asp-controller="Home" asp-action="HomePage" class="nav-link mx-4"><strong>Home</strong></a>
+                </li>
+                <li class="nav-item">
+                    <a asp-controller="Action" asp-action="ListActions" class="nav-link mx-4"><strong>Actions</strong></a>
+                </li>
+                <li class="nav-item">
+                    <a asp-controller="Action" asp-action="ReportPage" class="nav-link mx-4"><strong>Reports</strong></a>
+                </li>
+                <li class="nav-item">
+                    <form class="form-inline" asp-controller="Login" asp-action="LogOut" method="post">
+                        <input type="submit" class="btn btn-outline-danger btn-sm btn-floating mx-4 p-2" value="Logout" />
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+<div class="container justify-content-center mt-5 p-5 m-auto">
+
+    <div class="bg-image-ad">
+        <div class="access-denied-container">
+            <h1 class="display-4" style="color:white">Access Denied</h1>
+            <p class="lead">Your role does not permit you to take this action!</p>
+            <hr>
+            <a asp-controller="Home" asp-action="HomePage" class="btn btn-outline-info p-2">Go to Homepage</a>
+        </div>
+    </div>
+
+</div>

@@ -1,35 +1,38 @@
-﻿@model LoginEmp
+﻿@model LoginViewModel
 
 
 <div class="container">
     <!-- <div class="row"> -->
-    <div class="col-md-6 offset-md-3">
+    <div class="col-md-6 offset-md-3" >
         <h1>MTM Warehouse</h1>
-        <div class="login-container">
+        <div class="login-container" id="login-box">
             <div class="logo">
                 <img src="~/images/logo.jpg" alt="MTM Warehouse" />
             </div>
             <div class="form-group">
                 <form asp-controller="Login" asp-action="FetchLoginDetails" method="post" enctype="application/x-www-form-urlencoded">
-                    <h2 class="text-center">Get In !</h2>
+                    <h2 class="text-center">Login</h2>
                     <input type="text" class="form-control form-control-sm" placeholder="Username" asp-for="Username" required />
                     <input type="password" class="form-control form-control-sm" placeholder="Password" asp-for="Password" required />
                     <button type="submit" class="btn btn-block login-btn">Login</button>
                     <div asp-validation-summary="All" class="text-danger text-sm-start text-decoration-none fs-6"></div>
                 </form>
-                <a href="#" class="enroll-link text-info">Click here to get enrolled</a>
+                <a asp-action="RegisterPage" asp-controller="Login" class="enroll-link text-info text-decoration-none" id="register-user"> <span style="color:crimson; font-weight:800;">Register</span></a>
             </div>
         </div>
+        @if (TempData.ContainsKey("LastActionMessage"))
+        {
+            <div class="container p-5 row d-flex justify-content-center">
+
+                <div class="alert alert-success alert-dismissible fade show col-12" role="alert">
+                    @TempData["LastActionMessage"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+
+            </div>
+        }
     </div>
-    <!-- </div> -->
 </div>
 
 
 
-@if (TempData.ContainsKey("LastActionMessage"))
-{
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-        @TempData["LastActionMessage"]
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-}
