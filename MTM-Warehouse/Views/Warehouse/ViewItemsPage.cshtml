@@ -79,6 +79,7 @@
                 <th>Name</th>
                 <th>Space Required</th>
                 <th># of Units </th>
+                <th>Total Cost </th>
                 <th>Space Acquired</th>
                 <th>Action</th>
             </tr>
@@ -90,6 +91,7 @@
                     <td>@emp.Item_Name</td>
                     <td>@emp.Item_Capacity_Quant</td>
                     <td>@emp.Item_Unit_Quant</td>
+                    <td>@emp.Item_total_cost</td>
                     <td>@emp.Item_SpaceAccuired</td>
                     <td class="d-flex justify-content-center row  m-0">
                         <a class="btn btn-outline-info btn-sm btn-floating col-3" asp-controller="Warehouse" asp-action="EditItemPage" asp-route-id="@emp.WarehouseItemsId">Edit</a>

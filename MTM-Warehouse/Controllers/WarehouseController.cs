@@ -332,12 +332,12 @@ namespace MTM_Warehouse.Controllers
             itemWarehouseModel.WarehouseItems.WarehouseInfoId = itemWarehouseModel.WarehouseInfo.WarehouseInfoId;
             Console.WriteLine("W-ID > ", itemWarehouseModel.WarehouseItems.WarehouseInfoId);
            
-            
+
             if (ModelState.IsValid)
             {
                 itemWarehouseModel.WarehouseInfo = _context.WarehouseInfo_DbData.Find(itemWarehouseModel.WarehouseInfo.WarehouseInfoId);
                 itemWarehouseModel.WarehouseItems.Item_SpaceAccuired = itemWarehouseModel.WarehouseItems.Item_Capacity_Quant * itemWarehouseModel.WarehouseItems.Item_Unit_Quant;
-
+                itemWarehouseModel.WarehouseItems = _warehouseInfoService.TotalPrice(itemWarehouseModel.WarehouseItems);
                 // Detach the warehouseInfo entity to prevent tracking conflicts
                 //_context.Entry(warehouseInfo).State = EntityState.Detached;
 
@@ -388,6 +388,7 @@ namespace MTM_Warehouse.Controllers
             }
             warehouseInfo = _warehouseInfoService.WarehouseSpaceAvailable(warehouseInfo, total);
             warehouseInfo = _warehouseInfoService.WarehousePercentFull(warehouseInfo);
+            
             _context.WarehouseInfo_DbData.Update(warehouseInfo);
             _context.SaveChanges();
 
@@ -415,6 +416,7 @@ namespace MTM_Warehouse.Controllers
             
             if (ModelState.IsValid)
             {
+                items = _warehouseInfoService.TotalPrice(items);
                 _context.WarehouseItems_DbData.Update(items);
                 _context.SaveChanges();
 

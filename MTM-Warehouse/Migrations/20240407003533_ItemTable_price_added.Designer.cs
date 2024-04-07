@@ -4,6 +4,7 @@ using MTM_Warehouse.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MTM_Warehouse.Migrations
 {
     [DbContext(typeof(AllDbContext))]
-    partial class AllDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240407003533_ItemTable_price_added")]
+    partial class ItemTable_price_added
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

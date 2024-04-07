@@ -19,7 +19,11 @@ namespace MTM_Warehouse.Entities
         public double? Item_Capacity_Quant { get; set; }
         
         public double? Item_SpaceAccuired { get; set; }
-        
+
+        [Required(ErrorMessage = "Please enter item cost")]
+        public double? Item_price_per_unit { get; set; }
+
+        public double? Item_total_cost { get; set; }
         public int? WarehouseInfoId { get; set; }
 
         public WarehouseInfo? WarehouseInfo { get; set; }

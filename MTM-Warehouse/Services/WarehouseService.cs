@@ -17,6 +17,12 @@ namespace MTM_Warehouse.Services
             return warehouseInfo;
         }
 
+        public WarehouseItems TotalPrice (WarehouseItems warehouseItems)
+        {
+            warehouseItems.Item_total_cost = warehouseItems.Item_price_per_unit * warehouseItems.Item_Unit_Quant;
+            return warehouseItems;
+        }
+
         public double W_Percentage(WarehouseInfo warehouseInfo)
         { 
             double percent = (double)warehouseInfo.W_PercentFull;
