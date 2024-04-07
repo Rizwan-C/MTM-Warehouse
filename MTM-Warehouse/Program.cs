@@ -27,14 +27,7 @@ builder.Services.AddIdentity<User, IdentityRole>(options =>
     options.Password.RequiredUniqueChars = 0;
 }).AddEntityFrameworkStores<AllDbContext>().AddDefaultTokenProviders();
 
-//builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-//    .AddCookie(options =>
-//    {       
-//        options.AccessDeniedPath = "/Login/AccessDenied"; 
-//    });
-//options.LoginPath = "/Login/LoginPage"; 
 
-// Add services to the container.
 builder.Services.AddControllersWithViews();
 
 // Add DB context service:
