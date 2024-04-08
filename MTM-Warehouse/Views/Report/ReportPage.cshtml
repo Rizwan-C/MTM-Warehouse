@@ -1,0 +1,171 @@
+﻿@model ReportViewModel 
+
+@{
+    // var totalWarehouse = Model.warehouseInfo.Count;
+    // var totalItems = Model.warehouseItems.Count;
+    // var totalManagers = Model.loginEmps.Count;
+    var totalEmployee = ViewBag.WarehouseItemsCounts.Count;
+}
+
+<header>
+    <nav class="navbar navbar-expand-lg bg-dark navbar-dark py-3">
+        <div class="container">
+            <img class="navbar-img mx-3" src="~/images/logo.jpg" alt="no_logo">
+            <div class="navbar-brand">MTM Warehouse</div>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navmenu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navmenu">
+                <ul class="navbar-nav ms-auto ">
+                    <li class="nav-item">
+                        <a asp-controller="Home" asp-action="HomePage" class="nav-link mx-4"><strong>Home</strong></a>
+                    </li>
+                    <li class="nav-item">
+                        <a asp-controller="Action" asp-action="ListActions" class="nav-link mx-4"><strong>Actions</strong></a>
+                    </li>
+                    <li class="nav-item">
+                        <a asp-controller="Report" asp-action="ReportPage" class="nav-link mx-4"><strong>Reports</strong></a>
+                    </li>
+                    <li class="nav-item">
+                        <form class="form-inline" asp-controller="Login" asp-action="LogOut" method="post">
+                            <input type="submit" class="btn btn-outline-danger btn-sm btn-floating mx-4 p-2" value="Logout" />
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
+
+<section class="bg-dark text-light p-2 text-sm-start mb-2 ">
+    <div class="container">
+        <div class="d-sm-flex align-items-center justify-content-between">
+
+            <div class="container  col-3 mx-2 p-1 ">
+                <h1 class="text-center fs-2 m-0 " style="color: yellowgreen">Reports</h1>
+            </div>
+
+            <div class="col-3 p-1">
+                <img class="img-fluid rounded img-thumbnail" style="height: 100px; width:100px" src="~/images/reports.jpg">
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<div class="container row justify-content-center text-center m-auto">
+    <h1>Charts</h1>
+    @if (ViewBag.WarehouseNames != null && ViewBag.WarehouseItemsCounts != null)
+    {
+        <div class="col-6">
+            <h2>Items per warehouse</h2>
+            <canvas id="itemsCountChart" style="width: 400px; height: 400px;"></canvas>
+        </div>
+        <div class="col-6">
+            <h2>Total items cost per warehouse</h2>
+            <canvas id="itemsCostChart" style="width: 400px; height: 400px;"></canvas>
+        </div>
+    }
+    else
+    {
+        <div class="col-6">
+            <h2>You dont have enough data to visualize.</h2>            
+        </div>
+    }
+</div>
+
+@if (ViewBag.WarehouseNames != null && ViewBag.WarehouseItemsCounts != null)
+{
+    <div class="container my-2">
+        <div class="d-grid gap-2">
+            <a asp-action="DownloadPage" asp-controller="Report" class="btn btn-outline-success btn-sm btn-floating mx-4 p-2">Download reports</a>
+        </div>
+    </div>
+}
+else
+{
+    <div class="container my-2">
+        <div class="d-grid gap-2">
+            <button disabled class="btn btn-outline-success btn-sm btn-floating mx-4 p-2">Download reports</button>
+        </div>
+    </div>
+}
+
+
+
+@section Scripts {
+    <script>
+        window.onload = function () {
+            console.log("in script report page");
+            console.log("Warehouse Names:", @Html.Raw(Json.Serialize(ViewBag.WarehouseNames)));
+            console.log("Warehouse Items Counts:", @Html.Raw(Json.Serialize(ViewBag.WarehouseItemsCounts)));
+            console.log("Warehouse Items Costs:", @Html.Raw(Json.Serialize(ViewBag.WarehouseItemsCosts)));
+
+            // Chart initialization code follows...            
+
+            var ctxCount = document.getElementById('itemsCountChart').getContext('2d');
+            var countChartData = {
+                datasets: [{
+                    data: [@Html.Raw(string.Join(",", ViewBag.WarehouseItemsCounts))],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)', 'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)', 'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255,99,132,1)', 'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)', 'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)', 'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                }],
+                labels: [@Html.Raw("'" + string.Join("','", ViewBag.WarehouseNames) + "'")]
+            };
+
+            var itemsCountChart = new Chart(ctxCount, {
+                type: 'pie',
+                data: countChartData,
+                options: {
+                    responsive: true,
+                    title: {
+                        display: true,
+                        text: 'Items per Warehouse'
+                    }
+                }
+            });
+
+            var ctxCost = document.getElementById('itemsCostChart').getContext('2d');
+            var costChartData = {
+                datasets: [{
+                    data: [@Html.Raw(string.Join(",", ViewBag.WarehouseItemsCosts))],
+                    backgroundColor: [
+                        'rgba(255, 159, 64, 0.2)', 'rgba(153, 102, 255, 0.2)',
+                        'rgba(75, 192, 192, 0.2)', 'rgba(255, 206, 86, 0.2)',
+                        'rgba(54, 162, 235, 0.2)', 'rgba(255, 99, 132, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 159, 64, 1)', 'rgba(153, 102, 255, 1)',
+                        'rgba(75, 192, 192, 1)', 'rgba(255, 206, 86, 1)',
+                        'rgba(54, 162, 235, 1)', 'rgba(255,99,132,1)'
+                    ],
+                    borderWidth: 1
+                }],
+                labels: [@Html.Raw("'" + string.Join("','", ViewBag.WarehouseNames) + "'")]
+            };
+
+            var itemsCostChart = new Chart(ctxCost, {
+                type: 'pie',
+                data: costChartData,
+                options: {
+                    responsive: true,
+                    title: {
+                        display: true,
+                        text: 'Total Cost per Warehouse'
+                    }
+                }
+            });
+        };
+    </script>
+}
+

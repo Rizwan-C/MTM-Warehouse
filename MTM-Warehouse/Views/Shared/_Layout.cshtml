@@ -16,14 +16,17 @@
         <main role="main" class="p-0" >
             @RenderBody()
         </main>
-    </div>
+    </div> 
+    @* @RenderSection("Scripts", required: false) *@
 
     <footer class="border-top footer text-muted bg-dark text-white mt-5" >
         <div class="container">
             <p class="">&copy; 2024 - MTM_Warehouse - <a asp-controller="Home" asp-action="Privacy">Privacy</a> </p>            
         </div>
-    </footer>  
-
+    </footer>
+   
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    @* <script src="~/lib/Chart.js/chart.js"></script> *@
     <script src="~/js/updateRoles.js"></script>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
