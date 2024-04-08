@@ -331,26 +331,40 @@ namespace MTM_Warehouse.Controllers
             Console.WriteLine("WarehouseController :: POST : AddItem()");
             itemWarehouseModel.WarehouseItems.WarehouseInfoId = itemWarehouseModel.WarehouseInfo.WarehouseInfoId;
             Console.WriteLine("W-ID > ", itemWarehouseModel.WarehouseItems.WarehouseInfoId);
-           
 
-            if (ModelState.IsValid)
+            // Check if the item already exists in the database
+            var existingItem = _context.WarehouseItems_DbData
+                .FirstOrDefault(wi => wi.Item_Name == itemWarehouseModel.WarehouseItems.Item_Name && wi.WarehouseInfoId == warehouseInfo.WarehouseInfoId);
+
+            if (existingItem != null)
             {
-                itemWarehouseModel.WarehouseInfo = _context.WarehouseInfo_DbData.Find(itemWarehouseModel.WarehouseInfo.WarehouseInfoId);
-                itemWarehouseModel.WarehouseItems.Item_SpaceAccuired = itemWarehouseModel.WarehouseItems.Item_Capacity_Quant * itemWarehouseModel.WarehouseItems.Item_Unit_Quant;
-                itemWarehouseModel.WarehouseItems = _warehouseInfoService.TotalPrice(itemWarehouseModel.WarehouseItems);
-                // Detach the warehouseInfo entity to prevent tracking conflicts
-                //_context.Entry(warehouseInfo).State = EntityState.Detached;
+                //existingItem.Item_Unit_Quant += itemWarehouseModel.WarehouseItems.Item_Unit_Quant; // Update quantity or other fields as needed
+                //_warehouseInfoService.TotalPrice(existingItem); // Recalculate the total price if necessary
 
-                _context.WarehouseInfo_DbData.Update(itemWarehouseModel.WarehouseInfo);
-                _context.WarehouseItems_DbData.Add(itemWarehouseModel.WarehouseItems);
-                _context.SaveChanges();
-
-                TempData["LastActionMessage"] = $"Item - \"{itemWarehouseModel.WarehouseItems.Item_Name}\" added sucessfully.";
-
-                itemWarehouseModel.WarehouseItems = new WarehouseItems();
-
-                return RedirectToAction("AddItemPage", new { id = itemWarehouseModel.WarehouseInfo.WarehouseInfoId });
+                ModelState.AddModelError("ItemExists", "An item with this name already exists in the selected warehouse.");
+                return View("AddItemPage", itemWarehouseModel);
             }
+            else
+            {
+                if (ModelState.IsValid)
+                {
+                    itemWarehouseModel.WarehouseInfo = _context.WarehouseInfo_DbData.Find(itemWarehouseModel.WarehouseInfo.WarehouseInfoId);
+                    itemWarehouseModel.WarehouseItems.Item_SpaceAccuired = itemWarehouseModel.WarehouseItems.Item_Capacity_Quant * itemWarehouseModel.WarehouseItems.Item_Unit_Quant;
+                    itemWarehouseModel.WarehouseItems = _warehouseInfoService.TotalPrice(itemWarehouseModel.WarehouseItems);
+
+                    _context.WarehouseInfo_DbData.Update(itemWarehouseModel.WarehouseInfo);
+                    _context.WarehouseItems_DbData.Add(itemWarehouseModel.WarehouseItems);
+                    _context.SaveChanges();
+
+                    TempData["LastActionMessage"] = $"Item - \"{itemWarehouseModel.WarehouseItems.Item_Name}\" added sucessfully.";
+
+                    itemWarehouseModel.WarehouseItems = new WarehouseItems();
+
+                    return RedirectToAction("AddItemPage", new { id = itemWarehouseModel.WarehouseInfo.WarehouseInfoId });
+                }
+            }
+
+            
 
             return View("AddItemPage", itemWarehouseModel);
         }

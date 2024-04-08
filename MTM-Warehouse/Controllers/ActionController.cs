@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MTM_Warehouse.Entities;
+using MTM_Warehouse.Models;
 using MTM_Warehouse.Services;
 
 namespace MTM_Warehouse.Controllers
@@ -58,12 +59,80 @@ namespace MTM_Warehouse.Controllers
             }
         }
 
-        [HttpGet("/actions/moveItems")]
-        public IActionResult MoveItems()
+
+
+
+        public IActionResult TransferItems()
         {
-            return RedirectToAction();
+            var viewModel = new ItemTransferViewModel
+            {
+                Warehouses = _context.WarehouseInfo_DbData.ToList()
+            };
+
+            return View(viewModel);
         }
 
+        [HttpPost]
+        public IActionResult ConfirmTransfer(ItemTransferViewModel model)
+        {
+            if (model.ItemsToTransfer.Count > 1)
+            {
+                foreach (var item in model.ItemsToTransfer)
+                {
+                    var previousItemWarehouse = _context.WarehouseItems_DbData.Find(item.WarehouseItemId);
+                    if (previousItemWarehouse != null)
+                    {
+                        previousItemWarehouse.Item_Unit_Quant -= item.QuantityToTransfer;
+                        _warehouseInfoService.TotalPrice(previousItemWarehouse);
+
+                        var existingItemInDestination = _context.WarehouseItems_DbData
+                            .FirstOrDefault(wi => wi.Item_Name == previousItemWarehouse.Item_Name && wi.WarehouseInfoId == model.DestinationWarehouseId);
+
+                        if (existingItemInDestination != null)
+                        {
+                            existingItemInDestination.Item_Unit_Quant += item.QuantityToTransfer;
+                            _warehouseInfoService.TotalPrice(existingItemInDestination);
+                        }
+                        else
+                        {
+                            var newItemWarehouse = new WarehouseItems
+                            {
+                                Item_Name = previousItemWarehouse.Item_Name,
+                                Item_Capacity_Quant = previousItemWarehouse.Item_Capacity_Quant,
+                                Item_SpaceAccuired = previousItemWarehouse.Item_SpaceAccuired,
+                                Item_price_per_unit = previousItemWarehouse.Item_price_per_unit,
+                                Item_Unit_Quant = item.QuantityToTransfer, 
+                                WarehouseInfoId = model.DestinationWarehouseId 
+                            };
+                            _warehouseInfoService.TotalPrice(newItemWarehouse);
+                            _context.WarehouseItems_DbData.Add(newItemWarehouse); 
+                        }
+                    }
+                }
+
+                _context.SaveChanges();
+            }
+            TempData["LastActionMessage"] = $"Last action has been sucessfully fulfilled.";
+
+            return RedirectToAction("TransferItems");
+        }
+
+        
+
+        public IActionResult GetItemsForWarehouse(int warehouseId)
+        {
+            var items = _context.WarehouseItems_DbData
+                .Where(item => item.WarehouseInfoId == warehouseId)
+                .Select(item => new ItemToTransfer
+                {
+                    WarehouseItemId = item.WarehouseItemsId,
+                    ItemName = item.Item_Name,
+                    QuantityAvailable = item.Item_Unit_Quant ?? 0
+                })
+                .ToList();
+
+            return Json(items);
+        }
 
     }
 }
