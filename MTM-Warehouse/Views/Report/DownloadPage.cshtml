@@ -1,4 +1,4 @@
-﻿@model WarehouseInfo
+﻿@model DownloadReportViewModel
 
 <header>
     <nav class="navbar navbar-expand-lg bg-dark navbar-dark py-3">
@@ -36,7 +36,7 @@
         <div class="d-sm-flex align-items-center justify-content-between">
 
             <div class="container  col-3 mx-2 p-1 ">
-                <h1 class="text-center fs-2 m-0 " style="color: yellowgreen">Reports</h1>
+                <h1 class="text-center fs-2 m-0 " style="color: yellowgreen">Downloads</h1>
             </div>
 
             <div class="col-3 p-1">
@@ -48,3 +48,123 @@
 </section>
 
 
+
+<div class="container mt-5">
+    <div class="row mb-4 align-content-center ">
+        <div class="col-md-2">
+            <form asp-controller="Report" asp-action="DownloadWarehouseReport" method="get">
+                <button type="submit" class="btn btn-success btn-block">Download</button>
+            </form>
+        </div>
+        <div class="col-md-6">
+            <p class="pt-2"> a comprehensive report containing data for all warehouses.</p>
+        </div>
+    </div>
+
+    <div class="">
+        <form asp-controller="Report" asp-action="DownloadItemsReport" method="get" class="row mb-4 align-content-center">
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-success btn-block">Download</button>            
+            </div>
+            <div class="col-md-6">
+                <p class="pt-2">a detailed report of all items stored in a specific warehouse.</p>
+            </div>
+            <div class="col-md-3">
+           
+                    <select id="itemsWarehouseDropdown" name="warehouseId" class="form-control mb-2">
+                        <option value="">Select a Warehouse...</option>
+                        @foreach (var warehouse in Model.warehouseInfo)
+                        {
+                            <option value="@warehouse.WarehouseInfoId">@warehouse.W_Name</option>
+                        }
+                    </select>
+            </div>
+        </form>
+    </div>
+
+    <div class="row mb-4 align-content-center ">
+        <div class="col-md-2">
+            <form asp-controller="Report" asp-action="DownloadManagersReport" method="get">
+                <button type="submit" class="btn btn-success btn-block">Download</button>
+            </form>
+        </div>
+        <div class="col-md-6">
+            <p class="pt-2">a report containing information on all managers across various warehouses.</p>
+        </div>
+    </div>
+
+    <div class="">
+        <form asp-controller="Report" asp-action="DownloadEmployeeReport" method="get" class="row mb-4 align-content-center">
+            <div class="col-md-2 align-content-center">
+                <button type="submit" class="btn btn-success btn-block">Download</button>
+            
+            </div>
+            <div class="col-md-6">
+                <p class="pt-2">a report of all employees working in that specific warehouse.</p>
+            </div>
+            <div class="col-md-3">
+            
+                    <select id="employeesWarehouseDropdown" name="warehouseId" class="form-control mb-2">
+                        <option value="">Select a Warehouse...</option>
+                        @foreach (var warehouse in Model.warehouseInfo)
+                        {
+                            <option value="@warehouse.WarehouseInfoId">@warehouse.W_Name</option>
+                        }
+                    </select>            
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@* <div class="container m-5 m-auto">
+    <div class="container">
+        <form asp-controller="Report" asp-action="DownloadWarehouseReport" method="get">
+            <button type="submit" class="btn btn-success">Download Report for All Warehouses</button>
+        </form>
+    </div>
+    <div class="container">
+        <form asp-controller="Report" asp-action="DownloadItemsReport" method="get">
+            <label for="warehouseDropdown">Select Warehouse:</label>
+            <select id="warehouseDropdown" name="warehouseId" class="form-control">
+                <option value="">Select a Warehouse...</option>
+                @foreach (var warehouse in Model.warehouseInfo)
+                {
+                    <option value="@warehouse.WarehouseInfoId">@warehouse.W_Name</option>
+                }
+            </select>
+            <button type="submit" class="btn btn-primary mt-2">Download Items Report</button>
+        </form>
+    </div>
+    <div class="container">
+        <form asp-controller="Report" asp-action="DownloadManagersReport" method="get">
+            <button type="submit" class="btn btn-primary">Download All Managers Report</button>
+        </form>
+
+    </div>
+    <div class="container">
+        <form asp-controller="Report" asp-action="DownloadEmployeeReport" method="get">
+            <label for="warehouseDropdown">Select Warehouse:</label>
+            <select id="warehouseDropdown" name="warehouseId" class="form-control">
+                <option value="">Select a Warehouse...</option>
+                @foreach (var warehouse in Model.warehouseInfo)
+                {
+                    <option value="@warehouse.WarehouseInfoId">@warehouse.W_Name</option>
+                }
+            </select>
+            <button type="submit" class="btn btn-primary mt-2">Download Employees Report</button>
+        </form>
+    </div>
+</div> *@
+
+
+@* <form asp-controller="Report" asp-action="DownloadWarehouseReport" method="get">
+    <select asp-for="SelectedWarehouseId" asp-items="@(new SelectList(ViewBag.WarehouseInfo, "WarehouseInfoId", "W_Name"))" class="form-control">
+        <option value="">Select a Warehouse...</option>
+        @foreach (WarehouseInfo info in Model.warehouseInfo)
+        {
+            <option value="@info.WarehouseInfoId">@info.W_Name</option>
+        }
+    </select>
+    <button type="submit" class="btn btn-primary">Download Report</button>
+</form> *@
