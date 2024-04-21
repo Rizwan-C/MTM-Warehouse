@@ -7,7 +7,7 @@ namespace MTM_Warehouse.Services
         public WarehouseInfo WarehousePercentFull(WarehouseInfo warehouseInfo)
         {                           
             double percentageFull = (double)((warehouseInfo.W_SpaceAvailable / warehouseInfo.W_TotalCapacity) * 100);
-            warehouseInfo.W_PercentFull = Math.Truncate(percentageFull * 100) / 100;
+            warehouseInfo.W_PercentFull = ((double)Math.Truncate(100 - ((percentageFull * 100) / 100)));
             return warehouseInfo;
         }
 
